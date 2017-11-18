@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include "Geometry.h"
 #include "Helper.h"
+#include "Object.h"
 
 const char* title = "Assignment 2";
 const int width = 600;
@@ -27,6 +28,20 @@ void main(int argc, char** argv) {
 
 void render()
 {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	glPushMatrix();
+	glTranslated(60, 86, 0);
+	Obj::Knife().draw();
+	glPopMatrix();
+
+	glFlush();
+	glutSwapBuffers();
 }
 
 void reshape(int newWidth, int newHeight)
