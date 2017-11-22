@@ -34,7 +34,7 @@ void render()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
+	//test draw
 	glPushMatrix();
 	glTranslated(60, 86, 0);
 	Obj::Knife().draw();

@@ -3,11 +3,11 @@
 
 namespace Geo
 {
-	void drawTriangle(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3, bool withStroke);
-	void drawRectangle(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3, GLint x4, GLint y4, bool withStroke);
-	void drawCircle(float x, float y, float radius, bool withStroke);
-	void drawHalfCircle(float x, float y, float radius, bool withStroke);
-	void drawOval(float x_center, float y_center, float w, float h, bool withStroke);
+	void drawTriangle(float x1, float y1, float x2, float y2, float x3, float y3);
+	void drawRectangle(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+	void drawCircle(float x, float y, float radius);
+	void drawHalfCircle(float x, float y, float radius);
+	void drawOval(float x_center, float y_center, float w, float h);
 	void drawLine(int x1, int y1, int x2, int y2);
 }
 
