@@ -8,6 +8,12 @@ namespace Obj
 	public:
 		void draw();
 	};
+
+	class Mountain
+	{
+	public:
+		void draw();
+	};
 }
 
 #endif // !OBJECT_H

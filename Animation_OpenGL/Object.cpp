@@ -15,3 +15,15 @@ void Obj::Knife::draw()
 	glColor3f(Helper::hexToFloat(64), Helper::hexToFloat(0), Helper::hexToFloat(0));
 	Geo::drawRectangle(27, 70, 54, 70, 54, 0, 27, 0);
 }
+
+void Obj::Mountain::draw()
+{
+	glColor3f(Helper::hexToFloat(65), Helper::hexToFloat(89), Helper::hexToFloat(141));
+	Geo::drawTriangle(359, 0, 601, 284, 846, 0);
+	glColor3f(Helper::hexToFloat(112), Helper::hexToFloat(146), Helper::hexToFloat(190));
+	Geo::drawTriangle(0, 0, 308, 375, 616, 0);
+
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	Geo::drawTriangle(220, 268, 308, 375, 396, 268);
+	Geo::drawTriangle(526, 198, 601, 284, 676, 198);
+}

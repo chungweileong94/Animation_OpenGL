@@ -4,7 +4,9 @@
 #include "Object.h"
 
 const char* title = "Assignment 2";
-const int width = 600;
+//const int width = 600;
+//const int height = 600;
+const int width = 1000;
 const int height = 600;
 
 void render();
@@ -21,7 +23,8 @@ void main(int argc, char** argv) {
 	glutDisplayFunc(render);
 	glutReshapeFunc(reshape);
 
-	glClearColor(Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	//temp background color
+	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
 
 	glutMainLoop();
 }
@@ -37,7 +40,7 @@ void render()
 	//test draw
 	glPushMatrix();
 	glTranslated(60, 86, 0);
-	Obj::Knife().draw();
+	Obj::Mountain().draw();
 	glPopMatrix();
 
 	glFlush();
