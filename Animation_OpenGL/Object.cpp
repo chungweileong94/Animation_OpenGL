@@ -27,3 +27,13 @@ void Obj::Mountain::draw()
 	Geo::drawTriangle(220, 268, 308, 375, 396, 268);
 	Geo::drawTriangle(526, 198, 601, 284, 676, 198);
 }
+
+void Obj::Cloud::draw()
+{
+	glColor3f(Helper::hexToFloat(253), Helper::hexToFloat(238), Helper::hexToFloat(31));
+	Geo::drawCircle(28, 28, 28);
+	Geo::drawCircle(60, 65, 28);
+	Geo::drawCircle(99, 50, 28);
+	Geo::drawCircle(140, 28, 28);
+	Geo::drawRectangle(28, 0, 28, 40, 140, 40, 140, 0);
+}

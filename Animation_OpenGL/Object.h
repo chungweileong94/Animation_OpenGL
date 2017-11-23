@@ -14,6 +14,12 @@ namespace Obj
 	public:
 		void draw();
 	};
+
+	class Cloud
+	{
+	public:
+		void draw();
+	};
 }
 
 #endif // !OBJECT_H
