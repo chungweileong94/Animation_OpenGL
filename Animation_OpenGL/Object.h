@@ -20,6 +20,12 @@ namespace Obj
 	public:
 		void draw();
 	};
+
+	class Bird
+	{
+	public:
+		void draw();
+	};
 }
 
 #endif // !OBJECT_H

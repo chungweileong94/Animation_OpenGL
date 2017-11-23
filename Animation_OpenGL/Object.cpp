@@ -37,3 +37,33 @@ void Obj::Cloud::draw()
 	Geo::drawCircle(140, 28, 28);
 	Geo::drawRectangle(28, 0, 28, 40, 140, 40, 140, 0);
 }
+
+void Obj::Bird::draw()
+{
+	//w:392 h:230
+	//tail
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(201), Helper::hexToFloat(14));
+	Geo::drawTriangle(0, 151, 77, 140, 18, 173);
+	glColor3f(Helper::hexToFloat(237), Helper::hexToFloat(28), Helper::hexToFloat(36));
+	Geo::drawTriangle(20, 131, 77, 140, 23, 143);
+
+	//body
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(242), Helper::hexToFloat(0));
+	Geo::drawOval(133, 115, 137, 115);
+
+	//eyes
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	Geo::drawOval(190, 130, 38, 50);
+	Geo::drawOval(158, 130, 38, 50);
+	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
+	Geo::drawOval(203, 125, 10, 18);
+	Geo::drawOval(172, 125, 10, 18);
+
+	//mouth
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(127), Helper::hexToFloat(39));
+	Geo::drawTriangle(168, 80, 177, 101, 214, 75);
+
+	//wing
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(201), Helper::hexToFloat(14));
+	Geo::drawOval(90, 85, 70, 40);
+}

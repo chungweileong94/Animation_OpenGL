@@ -40,7 +40,7 @@ void render()
 	//test draw
 	glPushMatrix();
 	glTranslated(60, 86, 0);
-	Obj::Mountain().draw();
+	Obj::Bird().draw();
 	glPopMatrix();
 
 	glFlush();
