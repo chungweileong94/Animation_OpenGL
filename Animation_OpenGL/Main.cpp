@@ -4,13 +4,15 @@
 #include "Object.h"
 
 const char* title = "Assignment 2";
-//const int width = 600;
-//const int height = 600;
-const int width = 1000;
+const int width = 600;
 const int height = 600;
+//const int width = 1000;
+//const int height = 600;
 
 void render();
 void reshape(int newWidth, int newHeight);
+
+void gameplayRender();
 
 void main(int argc, char** argv) {
 	FreeConsole(); //hide console
@@ -38,10 +40,7 @@ void render()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//test draw
-	glPushMatrix();
-	glTranslated(60, 86, 0);
-	Obj::Bird().draw();
-	glPopMatrix();
+	gameplayRender();
 
 	glFlush();
 	glutSwapBuffers();
@@ -53,4 +52,32 @@ void reshape(int newWidth, int newHeight)
 	{
 		glutReshapeWindow(width, height);
 	}
+}
+
+void gameplayRender()
+{
+	//mountain
+	glPushMatrix();
+	Obj::Mountain().draw();
+	glPopMatrix();
+
+	//cloud
+	glPushMatrix();
+	Obj::Cloud cloud = Obj::Cloud();
+	cloud.y = height / 2 + 50;
+	cloud.x = width / 2;
+
+	glTranslated(cloud.x, cloud.y, 0);
+	Obj::Cloud().draw();
+	glPopMatrix();
+
+	//bird
+	glPushMatrix();
+	Obj::Bird bird = Obj::Bird();
+	bird.scale = .5;
+	bird.y = height / 2;
+
+	glTranslatef(bird.x, bird.y, 0);
+	bird.draw();
+	glPopMatrix();
 }
