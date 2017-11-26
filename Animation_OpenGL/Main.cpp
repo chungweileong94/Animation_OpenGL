@@ -9,6 +9,7 @@ using namespace std;
 const char* title = "Assignment 2";
 const int width = 600;
 const int height = 600;
+const float backgroundSpeed = (float) 1.0;
 const float dropSpeed = (float)0.8;
 const float flySpeed = (float)150;
 //const int width = 1000;
@@ -18,7 +19,10 @@ void render();
 void reshape(int newWidth, int newHeight);
 
 void gameplayRender();
+void moveBackground();
 void birdDrop();
+Obj::Mountain mountain = Obj::Mountain();
+Obj::Cloud cloud = Obj::Cloud();
 Obj::Bird bird = Obj::Bird();
 
 void keyboardControl(unsigned char key, GLint x, GLint y) {
@@ -35,6 +39,7 @@ void keyboardControl(unsigned char key, GLint x, GLint y) {
 
 void main(int argc, char** argv) {
 	bird.y = height / 2;
+	cloud.x = width / 2;
 	FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
@@ -62,6 +67,7 @@ void render()
 
 	//test draw
 	gameplayRender();
+	moveBackground();
 	birdDrop();
 	glFlush();
 	glutSwapBuffers();
@@ -80,17 +86,17 @@ void gameplayRender()
 {
 	//mountain
 	glPushMatrix();
-	Obj::Mountain().draw();
+	glTranslated(mountain.x, mountain.y, 0);
+	mountain.draw();
 	glPopMatrix();
 
 	//cloud
 	glPushMatrix();
-	Obj::Cloud cloud = Obj::Cloud();
 	cloud.y = height / 2 + 50;
-	cloud.x = width / 2;
+	//cloud.x = width / 2;
 
 	glTranslated(cloud.x, cloud.y, 0);
-	Obj::Cloud().draw();
+	cloud.draw();
 	glPopMatrix();
 
 	//bird
@@ -124,6 +130,16 @@ void drawText(const char *text, GLint length, GLint x, GLint y) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void moveBackground() {
+	if (cloud.x <= -200) {
+		cloud.x = width + 10;
+	}
+	if (mountain.x <= -860) {
+		mountain.x = width;
+	}
+	cloud.x -= backgroundSpeed;
+	mountain.x -= backgroundSpeed;
+}
 
 void birdDrop() {
 	if (bird.y <= -100) {
