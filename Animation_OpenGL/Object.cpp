@@ -33,7 +33,7 @@ void Obj::Mountain::draw()
 void Obj::Cloud::draw()
 {
 	glScalef(scale, scale, 0);
-	glColor3f(Helper::hexToFloat(253), Helper::hexToFloat(238), Helper::hexToFloat(31));
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(220), Helper::hexToFloat(31));
 	Geo::drawCircle(28, 28, 28);
 	Geo::drawCircle(60, 65, 28);
 	Geo::drawCircle(99, 50, 28);
@@ -75,4 +75,22 @@ void Obj::Bird::draw()
 	//wing
 	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(201), Helper::hexToFloat(14));
 	Geo::drawOval(90, 85, 70, 40);
+}
+
+void Obj::Bird::drop()
+{
+	velocity -= gravity;
+
+	if (velocity > -3)
+	{
+		y += velocity;
+	}
+}
+
+void Obj::Bird::fly()
+{
+	if (y < heightLimit)
+	{
+		velocity += lift;
+	}
 }

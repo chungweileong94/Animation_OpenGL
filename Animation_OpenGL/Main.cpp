@@ -9,38 +9,45 @@ using namespace std;
 const char* title = "Assignment 2";
 const int width = 600;
 const int height = 600;
-const float backgroundSpeed = (float) 1.0;
-const float dropSpeed = (float)0.8;
-const float flySpeed = (float)150;
-//const int width = 1000;
-//const int height = 600;
 
 void render();
 void reshape(int newWidth, int newHeight);
 
 void gameplayRender();
-void moveBackground();
-void birdDrop();
-Obj::Mountain mountain = Obj::Mountain();
-Obj::Cloud cloud = Obj::Cloud();
-Obj::Bird bird = Obj::Bird();
+void update();
+
+Obj::Mountain* mountain = new Obj::Mountain();
+Obj::Cloud* cloud = new  Obj::Cloud();
+Obj::Bird* bird = new Obj::Bird();
 
 void keyboardControl(unsigned char key, GLint x, GLint y) {
 	switch (key) {
-	case ' ': 
-		bird.y += flySpeed;
-		glTranslatef(bird.x, bird.y, 0);
-		//bird.draw();
-	break;
+	case ' ':
+		bird->fly();
+		break;
 	}
-	glutPostRedisplay();
 }
 
+void mouseControl(GLint button, GLint state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		bird->fly();
+	}
+}
+
+void init() {
+	cloud->y = height / 2 + 50;
+	bird->scale = .5;
+	bird->x = 50;
+	bird->heightLimit = height - 200;
+
+	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+}
 
 void main(int argc, char** argv) {
-	bird.y = height / 2;
-	cloud.x = width / 2;
-	FreeConsole(); //hide console
+	bird->y = height / 2;
+	cloud->x = width / 2;
+	//FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
 	glutInitWindowSize(width, height);
@@ -50,9 +57,9 @@ void main(int argc, char** argv) {
 	glutDisplayFunc(render);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboardControl);
+	glutMouseFunc(mouseControl);
 
-	//temp background color
-	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	init();
 
 	glutMainLoop();
 }
@@ -65,10 +72,10 @@ void render()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//test draw
 	gameplayRender();
-	moveBackground();
-	birdDrop();
+	update();
+	printf("%f\n", bird->velocity);
+
 	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -86,25 +93,20 @@ void gameplayRender()
 {
 	//mountain
 	glPushMatrix();
-	glTranslated(mountain.x, mountain.y, 0);
-	mountain.draw();
+	glTranslated(mountain->x, mountain->y, 0);
+	mountain->draw();
 	glPopMatrix();
 
 	//cloud
 	glPushMatrix();
-	cloud.y = height / 2 + 50;
-	//cloud.x = width / 2;
-
-	glTranslated(cloud.x, cloud.y, 0);
-	cloud.draw();
+	glTranslated(cloud->x, cloud->y, 0);
+	cloud->draw();
 	glPopMatrix();
 
 	//bird
 	glPushMatrix();
-	bird.scale = .5;
-	//bird.y = height / 2;
-	glTranslatef(bird.x, bird.y, 0);
-	bird.draw();
+	glTranslatef(bird->x, bird->y, 0);
+	bird->draw();
 	glPopMatrix();
 }
 
@@ -120,7 +122,7 @@ void drawText(const char *text, GLint length, GLint x, GLint y) {
 	glPushMatrix();
 	glLoadIdentity();
 	glRasterPos2i(x, y);
-	for (int i = 0; i<length; i++) {
+	for (int i = 0; i < length; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);
 	}
 	glPopMatrix();
@@ -130,28 +132,26 @@ void drawText(const char *text, GLint length, GLint x, GLint y) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void moveBackground() {
-	if (cloud.x <= -200) {
-		cloud.x = width + 10;
+void update() {
+	//background
+	if (cloud->x <= -200) {
+		cloud->x = width + 10;
 	}
-	if (mountain.x <= -860) {
-		mountain.x = width;
+	if (mountain->x <= -860) {
+		mountain->x = width;
 	}
-	cloud.x -= backgroundSpeed;
-	mountain.x -= backgroundSpeed;
-}
+	cloud->x -= cloud->speed;
+	mountain->x -= mountain->speed;
 
-void birdDrop() {
-	if (bird.y <= -100) {
-		//bird.y = height / 2;
+	//bird
+	if (bird->y <= -100) {
 		glColor3f(1.0f, 0.0f, 0.0f);
 		string text;
 		text = "GAME OVER";
-		drawText(text.data(), text.size(), width/2, height/2);
-
+		drawText(text.data(), text.size(), width / 2, height / 2);
 	}
 	else {
-		bird.y -= dropSpeed;
+		bird->drop();
 	}
 }
 

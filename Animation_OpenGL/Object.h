@@ -16,6 +16,7 @@ namespace Obj
 	public:
 		float scale = 1;
 		float x = 0, y = 0;
+		const float speed = .5;
 		void draw();
 	};
 
@@ -24,6 +25,7 @@ namespace Obj
 	public:
 		float scale = 1;
 		float x = 0, y = 0;
+		const float speed = .3;
 		void draw();
 	};
 
@@ -40,7 +42,13 @@ namespace Obj
 	public:
 		float scale = 1;
 		float x = 0, y = 0;
+		float heightLimit = 0;
+		const float gravity = .006;
+		const float lift = 1.5;
+		float velocity = 0;
 		void draw();
+		void drop();
+		void fly();
 	};
 }
 
