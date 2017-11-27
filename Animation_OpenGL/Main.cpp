@@ -37,7 +37,7 @@ void mouseControl(GLint button, GLint state, int x, int y) {
 
 void init() {
 	cloud->y = height / 2 + 50;
-	bird->scale = .5;
+	bird->scale = .4;
 	bird->x = 50;
 
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
