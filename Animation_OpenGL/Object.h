@@ -42,7 +42,6 @@ namespace Obj
 	public:
 		float scale = 1;
 		float x = 0, y = 0;
-		float heightLimit = 0;
 		const float gravity = .006;
 		const float lift = 1.5;
 		float velocity = 0;

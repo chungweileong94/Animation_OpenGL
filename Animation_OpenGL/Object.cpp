@@ -80,17 +80,10 @@ void Obj::Bird::draw()
 void Obj::Bird::drop()
 {
 	velocity -= gravity;
-
-	if (velocity > -3)
-	{
-		y += velocity;
-	}
+	y += velocity;
 }
 
 void Obj::Bird::fly()
 {
-	if (y < heightLimit)
-	{
-		velocity += lift;
-	}
+	velocity += lift;
 }

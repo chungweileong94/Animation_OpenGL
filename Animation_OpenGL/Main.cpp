@@ -39,7 +39,6 @@ void init() {
 	cloud->y = height / 2 + 50;
 	bird->scale = .5;
 	bird->x = 50;
-	bird->heightLimit = height - 200;
 
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
 }
