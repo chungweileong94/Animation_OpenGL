@@ -25,7 +25,8 @@ namespace Obj
 	public:
 		float scale = 1;
 		float x = 0, y = 0;
-		const float speed = .3;
+		float speed = .3;
+		int color[3] = { 255, 220, 31 };
 		void draw();
 	};
 

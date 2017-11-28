@@ -3,6 +3,7 @@
 #include "Helper.h"
 #include "Object.h"
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -17,8 +18,10 @@ void gameplayRender();
 void update();
 
 Obj::Mountain* mountain = new Obj::Mountain();
-Obj::Cloud* cloud = new  Obj::Cloud();
+Obj::Cloud* cloud_1 = new  Obj::Cloud();
+Obj::Cloud* cloud_2 = new Obj::Cloud();
 Obj::Bird* bird = new Obj::Bird();
+Obj::Wood woods[5];
 
 void keyboardControl(unsigned char key, GLint x, GLint y) {
 	switch (key) {
@@ -36,16 +39,27 @@ void mouseControl(GLint button, GLint state, int x, int y) {
 }
 
 void init() {
-	cloud->y = height / 2 + 50;
+	cloud_1->y = height / 2 + 50;
+	cloud_2->y = height / 2 + 150;
+	cloud_2->color[0] = 255;
+	cloud_2->color[1] = 127;
+	cloud_2->color[2] = 39;
+	cloud_2->speed += .01;
 	bird->scale = .4;
 	bird->x = 50;
 
+	for each (Obj::Wood wood in woods)
+	{
+		wood.scale = .5;
+	}
+
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+
 }
 
 void main(int argc, char** argv) {
 	bird->y = height / 2;
-	cloud->x = width / 2;
+	cloud_1->x = width / 2;
 	//FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
@@ -96,10 +110,16 @@ void gameplayRender()
 	mountain->draw();
 	glPopMatrix();
 
-	//cloud
+	//cloud 1
 	glPushMatrix();
-	glTranslated(cloud->x, cloud->y, 0);
-	cloud->draw();
+	glTranslated(cloud_1->x, cloud_1->y, 0);
+	cloud_1->draw();
+	glPopMatrix();
+
+	//cloud 2
+	glPushMatrix();
+	glTranslated(cloud_2->x, cloud_2->y, 0);
+	cloud_2->draw();
 	glPopMatrix();
 
 	//bird
@@ -133,13 +153,17 @@ void drawText(const char *text, GLint length, GLint x, GLint y) {
 
 void update() {
 	//background
-	if (cloud->x <= -200) {
-		cloud->x = width + 10;
+	if (cloud_1->x <= -200) {
+		cloud_1->x = width + 10;
+	}
+	if (cloud_2->x <= -200) {
+		cloud_2->x = width + 10;
 	}
 	if (mountain->x <= -860) {
 		mountain->x = width;
 	}
-	cloud->x -= cloud->speed;
+	cloud_1->x -= cloud_1->speed;
+	cloud_2->x -= cloud_2->speed;
 	mountain->x -= mountain->speed;
 
 	//bird

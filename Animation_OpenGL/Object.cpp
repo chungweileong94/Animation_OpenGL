@@ -33,7 +33,7 @@ void Obj::Mountain::draw()
 void Obj::Cloud::draw()
 {
 	glScalef(scale, scale, 0);
-	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(220), Helper::hexToFloat(31));
+	glColor3f(Helper::hexToFloat(color[0]), Helper::hexToFloat(color[1]), Helper::hexToFloat(color[2]));
 	Geo::drawCircle(28, 28, 28);
 	Geo::drawCircle(60, 65, 28);
 	Geo::drawCircle(99, 50, 28);
