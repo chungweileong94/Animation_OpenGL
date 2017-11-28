@@ -43,7 +43,27 @@ void Obj::Cloud::draw()
 
 void Obj::Wood::draw()
 {
+	glScalef(scale, scale, 0);
 
+	//w: 158 h:391
+	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
+	Geo::drawRectangle(0, 0, 0, 391, 158, 391, 158, 0);
+
+	glColor3f(Helper::hexToFloat(91), Helper::hexToFloat(57), Helper::hexToFloat(38));
+	glLineWidth(5);
+	Geo::drawLine(39, 203, 39, 334);
+	Geo::drawLine(50, 24, 50, 138);
+	Geo::drawLine(75, 87, 75, 210);
+	Geo::drawLine(116, 30, 116, 120);
+	Geo::drawLine(134, 188, 134, 328);
+
+	Geo::drawOval(95, 283, 48, 98);
+	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
+	Geo::drawOval(95, 283, 37, 87);
+	glColor3f(Helper::hexToFloat(91), Helper::hexToFloat(57), Helper::hexToFloat(38));
+	Geo::drawOval(97, 278, 20, 40);
+	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
+	Geo::drawOval(97, 278, 9, 29);
 }
 
 void Obj::Bird::draw()
