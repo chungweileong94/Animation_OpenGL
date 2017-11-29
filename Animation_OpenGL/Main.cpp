@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include <GL/glut.h>
 #include "Geometry.h"
 #include "Helper.h"
@@ -10,10 +11,13 @@ using namespace std;
 const char* title = "Assignment 2";
 const int width = 600;
 const int height = 600;
+bool isGameStart;
+bool isGameOver;
 
 void render();
 void reshape(int newWidth, int newHeight);
 
+void init();
 void gameplayRender();
 void update();
 
@@ -23,43 +27,37 @@ Obj::Cloud* cloud_2 = new Obj::Cloud();
 Obj::Bird* bird = new Obj::Bird();
 Obj::Wood woods[5];
 
-void keyboardControl(unsigned char key, GLint x, GLint y) {
-	switch (key) {
+void keyboardControl(unsigned char key, int x, int y) {
+	switch (key)
+	{
+	case 13:
+		if (isGameOver)
+		{
+			isGameOver = false;
+			init();
+		}
+		break;
+
 	case ' ':
-		bird->fly();
+		if (isGameStart)
+			bird->fly();
+		else
+			isGameStart = true;
 		break;
 	}
 }
 
-void mouseControl(GLint button, GLint state, int x, int y) {
+void mouseControl(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		bird->fly();
+		if (isGameStart)
+			bird->fly();
+		else
+			isGameStart = true;
 	}
-}
-
-void init() {
-	cloud_1->y = height / 2 + 50;
-	cloud_2->y = height / 2 + 150;
-	cloud_2->color[0] = 255;
-	cloud_2->color[1] = 127;
-	cloud_2->color[2] = 39;
-	cloud_2->speed += .01;
-	bird->scale = .4;
-	bird->x = 50;
-
-	for each (Obj::Wood wood in woods)
-	{
-		wood.scale = .5;
-	}
-
-	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
-
 }
 
 void main(int argc, char** argv) {
-	bird->y = height / 2;
-	cloud_1->x = width / 2;
 	//FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
@@ -102,6 +100,30 @@ void reshape(int newWidth, int newHeight)
 	}
 }
 
+void init() {
+	isGameStart = false;
+	isGameOver = false;
+
+	cloud_1->x = width / 2;
+	cloud_1->y = height / 2 + 50;
+	cloud_2->y = height / 2 + 150;
+	cloud_2->color[0] = 255;
+	cloud_2->color[1] = 127;
+	cloud_2->color[2] = 39;
+	cloud_2->speed += .01;
+	bird->scale = .4;
+	bird->x = 50;
+	bird->y = height / 2;
+	bird->velocity = 0;
+
+	for each (Obj::Wood wood in woods)
+	{
+		wood.scale = .5;
+	}
+
+	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
+}
+
 void gameplayRender()
 {
 	//mountain
@@ -129,21 +151,26 @@ void gameplayRender()
 	glPopMatrix();
 }
 
-void drawText(const char *text, GLint length, GLint x, GLint y) {
+void drawText(const char *text, GLint length, GLfloat x, GLfloat y) {
 	glMatrixMode(GL_PROJECTION);
 	double *matrix = new double[16];
 	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
 	glLoadIdentity();
-	glOrtho(0, 800, 0, 600, -5, 5);
+	gluOrtho2D(0, width, 0, height);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
 	glLoadIdentity();
-	glRasterPos2i(x, y);
-	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);
-	}
+
+	//width of the string
+	unsigned int string_width = 0;
+	for (const char *c = text; *c != NULL; c++)
+		string_width += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, *c);
+
+	glRasterPos2f(x - string_width / 2, y);
+	for (const char *c = text; *c != NULL; c++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
 	glPopMatrix();
 
 	glMatrixMode(GL_PROJECTION);
@@ -166,15 +193,31 @@ void update() {
 	cloud_2->x -= cloud_2->speed;
 	mountain->x -= mountain->speed;
 
-	//bird
-	if (bird->y <= -100) {
-		glColor3f(1.0f, 0.0f, 0.0f);
-		string text;
-		text = "GAME OVER";
-		drawText(text.data(), text.size(), width / 2, height / 2);
+	//check game status
+	if (!isGameStart && !isGameOver)
+	{
+		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
+		string title = "Tap 'Spacebar' or 'Left-click' to start";
+		drawText(title.data(), title.length(), width / 2, height / 2);
+		return;
 	}
-	else {
-		bird->drop();
+	else if (isGameStart && !isGameOver)
+	{
+		if (bird->y <= -100 || bird->y >= height) {
+			isGameOver = true;
+			isGameStart = false;
+		}
+		else {
+			bird->drop();
+		}
+	}
+	else
+	{
+		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
+		string title = "GAME OVER";
+		drawText(title.data(), title.length(), width / 2, height / 2);
+		string desc = "Press 'Enter' to retry again";
+		drawText(desc.data(), desc.length(), width / 2, height / 2 - 28);
 	}
 }
 
