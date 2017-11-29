@@ -8,6 +8,8 @@
 
 using namespace std;
 
+bool dev = false; //dev mode
+
 const char* title = "Assignment 2";
 const int width = 600;
 const int height = 600;
@@ -58,7 +60,7 @@ void mouseControl(int button, int state, int x, int y) {
 }
 
 void main(int argc, char** argv) {
-	//FreeConsole(); //hide console
+	if (!dev) FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
 	glutInitWindowSize(width, height);
@@ -85,7 +87,15 @@ void render()
 
 	gameplayRender();
 	update();
-	printf("%f\n", bird->velocity);
+
+	//dev stat
+	if (dev)
+	{
+		printf("Velocity %f\n", bird->velocity);
+		printf("Is Game Start %d\n", isGameStart);
+		printf("Is Game Over %d\n", isGameOver);
+		printf("=============================\n");
+	}
 
 	glFlush();
 	glutSwapBuffers();
