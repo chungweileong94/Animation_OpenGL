@@ -20,8 +20,10 @@ void Obj::Knife::draw()
 void Obj::Mountain::draw()
 {
 	glScalef(scale, scale, 0);
+
 	glColor3f(Helper::hexToFloat(65), Helper::hexToFloat(89), Helper::hexToFloat(141));
 	Geo::drawTriangle(359, 0, 601, 284, 846, 0);
+
 	glColor3f(Helper::hexToFloat(112), Helper::hexToFloat(146), Helper::hexToFloat(190));
 	Geo::drawTriangle(0, 0, 308, 375, 616, 0);
 
@@ -33,6 +35,15 @@ void Obj::Mountain::draw()
 void Obj::Cloud::draw()
 {
 	glScalef(scale, scale, 0);
+	//shadow
+	int shadowX = 3, shadowY = 3;
+	glColor3f(Helper::hexToFloat(color[0] - 50), Helper::hexToFloat(color[1] - 50), Helper::hexToFloat(color[2] - 50));
+	Geo::drawCircle(28 + shadowX, 28 + shadowY, 28);
+	Geo::drawCircle(60 + shadowX, 65 + shadowY, 28);
+	Geo::drawCircle(99 + shadowX, 50 + shadowY, 28);
+	Geo::drawCircle(140 + shadowX, 28 + shadowY, 28);
+	Geo::drawRectangle(28 + shadowX, 0 + shadowY, 28 + shadowX, 40 + shadowY, 140 + shadowX, 40 + shadowY, 140 + shadowX, 0 + shadowY);
+
 	glColor3f(Helper::hexToFloat(color[0]), Helper::hexToFloat(color[1]), Helper::hexToFloat(color[2]));
 	Geo::drawCircle(28, 28, 28);
 	Geo::drawCircle(60, 65, 28);
@@ -70,6 +81,16 @@ void Obj::Bird::draw()
 {
 	glScalef(scale, scale, 0);
 	//w:392 h:230
+	//shadow
+	int shadowX = -5, shadowY = -5;
+	glColor3f(Helper::hexToFloat(211), Helper::hexToFloat(72), Helper::hexToFloat(0));
+	Geo::drawTriangle(0 + shadowX, 151 + shadowY, 77 + shadowX, 140 + shadowY, 18 + shadowX, 173 + shadowY);
+	Geo::drawTriangle(20 + shadowX, 131 + shadowY, 77 + shadowX, 140 + shadowY, 23 + shadowX, 143 + shadowY);
+	Geo::drawOval(133 + shadowX, 115 + shadowY, 137, 115);
+	//Geo::drawOval(190 + shadowX, 130 + shadowY, 38, 50);
+	//Geo::drawTriangle(168 + shadowX, 80 + shadowY, 177 + shadowX, 101 + shadowY, 214 + shadowX, 75 + shadowY);
+	Geo::drawOval(90 + shadowX, 85 + shadowY, 70, 40);
+
 	//tail
 	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(201), Helper::hexToFloat(14));
 	Geo::drawTriangle(0, 151, 77, 140, 18, 173);
