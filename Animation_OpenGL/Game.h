@@ -25,6 +25,7 @@ private:
 	Obj::Cloud* cloud_2;
 	Obj::Bird* bird;
 	Obj::Wood woods[5];
+	Obj::Knife knifes[3];
 };
 
 #endif // !GAME_H

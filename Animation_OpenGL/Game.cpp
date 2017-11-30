@@ -36,6 +36,14 @@ void Game::init()
 		wood.scale = .5;
 	}
 
+	for (int i = 0; i < 3; i++) {
+		knifes[i].scale = .2;
+		knifes[i].rotation = 90;
+		knifes[i].x = width;
+		knifes[i].y = rand() % height + 1;
+		knifes[i].speed = rand() % 5 + 2;
+	}
+
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
 }
 
@@ -71,6 +79,22 @@ void Game::update()
 		}
 		else {
 			bird->drop();
+			for (int i = 0; i < 3; i++) {
+				if (knifes[i].x >=-100) {
+					knifes[i].fly();
+					if (knifes[i].x  > bird->x && knifes[i].x -20 < bird->x + 108 && knifes[i].y > bird->y + 23 && knifes[i].y < bird->y + 46) {
+						isGameOver = true;
+						isGameStart = false;
+						printf("%s \n", knifes[i].x + knifes[i].y);
+					}
+				}
+				else {
+					knifes[i].x = width;
+					knifes[i].y = rand() % height + 1;
+					/*knifes[i].speed = rand() % 5 + 2;*/
+					knifes[i].speed = 1;
+				}
+			}
 		}
 	}
 	else
@@ -108,6 +132,15 @@ void Game::render()
 	glTranslatef(bird->x, bird->y, 0);
 	bird->draw();
 	glPopMatrix();
+
+	//knife
+	for each (Obj::Knife knife in knifes)
+	{
+		glPushMatrix();
+		glTranslatef(knife.x, knife.y, 0);
+		knife.draw();
+		glPopMatrix();
+	}
 }
 
 void Game::birdFly()

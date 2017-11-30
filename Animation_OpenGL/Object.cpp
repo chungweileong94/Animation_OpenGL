@@ -6,6 +6,7 @@
 void Obj::Knife::draw()
 {
 	glScalef(scale, scale, 0);
+	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 	//w:81 h:243
 	glColor3f(Helper::hexToFloat(200), Helper::hexToFloat(191), Helper::hexToFloat(231));
 	Geo::drawTriangle(14, 87, 40.5, 243, 40.5, 87);
@@ -127,4 +128,9 @@ void Obj::Bird::drop()
 void Obj::Bird::fly()
 {
 	velocity += lift;
+}
+
+void Obj::Knife::fly()
+{
+	x -= speed;
 }
