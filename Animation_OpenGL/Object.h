@@ -57,13 +57,6 @@ namespace Obj
 		void drop();
 		void fly();
 	};
-
-	class BoomWord
-	{
-	public:
-		float scale = 1;
-		float x = 0, y = 0;
-	};
 }
 
 #endif // !OBJECT_H
