@@ -27,9 +27,10 @@ void Game::init()
 	cloud_2->color[2] = 39;
 	cloud_2->speed += .01;
 	bird->scale = .4;
-	bird->x = 50;
+	bird->x = 100;
 	bird->y = height / 2;
 	bird->velocity = 0;
+	bird->angle = 0;
 
 	for each (Obj::Wood wood in woods)
 	{
@@ -87,25 +88,21 @@ void Game::render()
 {
 	//mountain
 	glPushMatrix();
-	glTranslated(mountain->x, mountain->y, 0);
 	mountain->draw();
 	glPopMatrix();
 
 	//cloud 1
 	glPushMatrix();
-	glTranslated(cloud_1->x, cloud_1->y, 0);
 	cloud_1->draw();
 	glPopMatrix();
 
 	//cloud 2
 	glPushMatrix();
-	glTranslated(cloud_2->x, cloud_2->y, 0);
 	cloud_2->draw();
 	glPopMatrix();
 
 	//bird
 	glPushMatrix();
-	glTranslatef(bird->x, bird->y, 0);
 	bird->draw();
 	glPopMatrix();
 }

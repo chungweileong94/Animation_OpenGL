@@ -2,9 +2,13 @@
 #include <GL/glut.h>
 #include "Geometry.h"
 #include "Helper.h"
+#include <math.h>
+
+#define PI 3.14159265
 
 void Obj::Knife::draw()
 {
+	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
 	//w:81 h:243
 	glColor3f(Helper::hexToFloat(200), Helper::hexToFloat(191), Helper::hexToFloat(231));
@@ -19,6 +23,7 @@ void Obj::Knife::draw()
 
 void Obj::Mountain::draw()
 {
+	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
 
 	glColor3f(Helper::hexToFloat(65), Helper::hexToFloat(89), Helper::hexToFloat(141));
@@ -34,6 +39,7 @@ void Obj::Mountain::draw()
 
 void Obj::Cloud::draw()
 {
+	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
 	//shadow
 	int shadowX = 3, shadowY = 3;
@@ -54,6 +60,7 @@ void Obj::Cloud::draw()
 
 void Obj::Wood::draw()
 {
+	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
 
 	//w: 158 h:391
@@ -79,8 +86,15 @@ void Obj::Wood::draw()
 
 void Obj::Bird::draw()
 {
-	glScalef(scale, scale, 0);
 	//w:392 h:230
+	glTranslatef(x, y, 0);
+	glScalef(scale, scale, 0);
+
+	glPushMatrix();
+	glTranslatef(height / 2 * cos((angle + 225)*PI / 180), height / 2 * sin((angle + 225) *PI / 180), 0);
+	glRotated(angle, 0, 0, 1);
+
+#pragma region draw
 	//shadow
 	int shadowX = -5, shadowY = -5;
 	glColor3f(Helper::hexToFloat(211), Helper::hexToFloat(72), Helper::hexToFloat(0));
@@ -116,15 +130,23 @@ void Obj::Bird::draw()
 	//wing
 	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(201), Helper::hexToFloat(14));
 	Geo::drawOval(90, 85, 70, 40);
+#pragma endregion
+
+	glPopMatrix();
 }
 
 void Obj::Bird::drop()
 {
 	velocity -= gravity;
 	y += velocity;
+	if (angle > -45)
+	{
+		angle -= .2;
+	}
 }
 
 void Obj::Bird::fly()
 {
 	velocity += lift;
+	angle = 45;
 }
