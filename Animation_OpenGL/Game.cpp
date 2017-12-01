@@ -73,10 +73,10 @@ void Game::update()
 		if (bird->y <= -100 || bird->y >= height) {
 			isGameOver = true;
 			isGameStart = false;
+			return;
 		}
 		else {
-			bird->drop();
-
+			//check knife collision
 			float birdRadius = bird->getScaledRadius();
 			float knifeWidth = knifes[0].getScaledHeight();
 			float knifeRadius = knifeWidth / 2;
@@ -106,12 +106,15 @@ void Game::update()
 					{
 						isGameOver = true;
 						isGameStart = false;
+						return;
 					}
 				}
 				else {
 					knifes[i].reset(width + 100, height);
 				}
 			}
+
+			bird->drop();
 		}
 	}
 	else
