@@ -11,7 +11,7 @@ void reshape(int newWidth, int newHeight);
 void keyboardControl(unsigned char key, int x, int y);
 void mouseControl(int button, int state, int x, int y);
 
-Game *game = new Game(width, height);
+Game *game = new Game(width, height, false);
 
 void main(int argc, char** argv) {
 	FreeConsole(); //hide console

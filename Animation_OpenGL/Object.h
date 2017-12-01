@@ -10,11 +10,15 @@ namespace Obj
 		float rotation = 1;
 		float x = 0, y = 0;
 		float speed = 1;
-		const float width = 81, height = 243;
+
 
 		void draw();
 		void reset(float xPos, float maxHeight);
 		void moveLeft();
+		float getScaledHeight();
+
+	private:
+		const float width = 81, height = 243;
 	};
 
 	class Mountain
@@ -51,16 +55,20 @@ namespace Obj
 	{
 	public:
 		float scale = 1;
-		float angle = 0;
 		float x = 0, y = 0;
 		float velocity = 0;
-		const float gravity = .006;
-		const float lift = 1.5;
-		const float width = 230, height = 392;
-
+		float angle = 0;
+		
 		void draw();
+		void drawDevGuideLine();
 		void drop();
 		void fly();
+		float getScaledRadius();
+
+	private:
+		const float width = 230, height = 392;
+		const float gravity = .006;
+		const float lift = 1.5;
 	};
 }
 

@@ -10,6 +10,9 @@ void Obj::Knife::draw()
 {
 	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
+
+	glPushMatrix();
+
 	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 	//w:81 h:243
 	glColor3f(Helper::hexToFloat(200), Helper::hexToFloat(191), Helper::hexToFloat(231));
@@ -20,6 +23,8 @@ void Obj::Knife::draw()
 	Geo::drawRectangle(0, 87, 81, 87, 81, 70, 0, 70);
 	glColor3f(Helper::hexToFloat(64), Helper::hexToFloat(0), Helper::hexToFloat(0));
 	Geo::drawRectangle(27, 70, 54, 70, 54, 0, 27, 0);
+
+	glPopMatrix();
 }
 
 void Obj::Knife::reset(float xPos, float maxHeight)
@@ -143,6 +148,24 @@ void Obj::Bird::draw()
 	glPopMatrix();
 }
 
+void Obj::Bird::drawDevGuideLine()
+{
+	glPointSize(2);
+	glColor3i(0, 0, 0);
+	glBegin(GL_LINES);
+	glVertex2i(x - height / 2 * pow(scale, 2), y - height / 2 * pow(scale, 2));
+	glVertex2i(x - height / 2 * pow(scale, 2), y + height / 2 * pow(scale, 2));
+	glVertex2i(x - height / 2 * pow(scale, 2), y + height / 2 * pow(scale, 2));
+	glVertex2i(x + height / 2 * pow(scale, 2), y + height / 2 * pow(scale, 2));
+	glVertex2i(x + height / 2 * pow(scale, 2), y + height / 2 * pow(scale, 2));
+	glVertex2i(x + height / 2 * pow(scale, 2), y - height / 2 * pow(scale, 2));
+	glVertex2i(x + height / 2 * pow(scale, 2), y - height / 2 * pow(scale, 2));
+	glVertex2i(x - height / 2 * pow(scale, 2), y - height / 2 * pow(scale, 2));
+	glVertex2i(x - height / 2 * pow(scale, 2), y - height / 2 * pow(scale, 2));
+	glVertex2i(x, y);
+	glEnd();
+}
+
 void Obj::Bird::drop()
 {
 	velocity -= gravity;
@@ -159,7 +182,17 @@ void Obj::Bird::fly()
 	angle = 45;
 }
 
+float Obj::Bird::getScaledRadius()
+{
+	return height / 2 * pow(scale, 2);
+}
+
 void Obj::Knife::moveLeft()
 {
 	x -= speed;
+}
+
+float Obj::Knife::getScaledHeight()
+{
+	return height * scale;
 }

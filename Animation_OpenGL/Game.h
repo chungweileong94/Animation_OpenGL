@@ -7,7 +7,7 @@
 class Game
 {
 public:
-	Game(int width, int height);
+	Game(int width, int height, bool devMode);
 	void init();
 	void update();
 	void render();
@@ -19,12 +19,12 @@ public:
 private:
 	void drawText(const char *text, GLint length, GLfloat x, GLfloat y);
 
+	bool dev;
 	int width, height;
 	Obj::Mountain* mountain;
 	Obj::Cloud* cloud_1;
 	Obj::Cloud* cloud_2;
 	Obj::Bird* bird;
-	Obj::Wood woods[5];
 	Obj::Knife knifes[3];
 };
 

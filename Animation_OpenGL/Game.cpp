@@ -3,9 +3,11 @@
 #include <string>
 #include <math.h>
 #include "Helper.h"
+#include "Geometry.h"
 
-Game::Game(int width, int height)
+Game::Game(int width, int height, bool devMode)
 {
+	this->dev = devMode;
 	this->width = width;
 	this->height = height;
 	cloud_1 = new Obj::Cloud();
@@ -36,7 +38,7 @@ void Game::init()
 	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 		knifes[i].scale = .3;
 		knifes[i].rotation = 90;
-		knifes[i].reset(width + 50, height);
+		knifes[i].reset(width - 100, height);
 	}
 
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
@@ -74,29 +76,40 @@ void Game::update()
 		}
 		else {
 			bird->drop();
+
+			float birdRadius = bird->getScaledRadius();
+			float knifeWidth = knifes[0].getScaledHeight();
+			float knifeRadius = knifeWidth / 2;
+
 			for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 				if (knifes[i].x >= -100) {
 					knifes[i].moveLeft();
 
-					float birdRadius = bird->height / 2 * pow(bird->scale, 2);
-					float knifeWidth = knifes[i].width * pow(knifes[i].scale, 2);
-					float knifeRadius = knifeWidth / 2;
+#pragma region Dev Guideline
+					if (dev)
+					{
+						glColor3f(1, 0, 0);
+						Geo::drawCircle(knifes[i].x, knifes[i].y, 10);
+						Geo::drawCircle(knifes[i].x - knifeRadius, knifes[i].y, 10);
+						Geo::drawCircle(knifes[i].x - knifeWidth, knifes[i].y, 10);
 
-					if (knifes[i].x - knifeWidth < bird->x + birdRadius &&
-						knifes[i].x - knifeWidth > bird->x - birdRadius &&
-						knifes[i].x - knifeRadius < bird->x + birdRadius &&
-						knifes[i].x - knifeRadius > bird->x - birdRadius &&
-						knifes[i].x < bird->x + birdRadius &&
-						knifes[i].x > bird->x - birdRadius &&
-						knifes[i].y < bird->y + birdRadius - 40 &&
-						knifes[i].y>bird->y - birdRadius)
+						glColor3f(0, 0, 1);
+						Geo::drawCircle(bird->x + birdRadius, bird->y + birdRadius - 20, 10);
+						Geo::drawCircle(bird->x - birdRadius, bird->y - birdRadius, 10);
+					}
+#pragma endregion
+
+					if (((knifes[i].x - knifeWidth < bird->x + birdRadius && knifes[i].x - knifeWidth > bird->x - birdRadius) ||
+						(knifes[i].x - knifeRadius < bird->x + birdRadius && knifes[i].x - knifeRadius > bird->x - birdRadius) ||
+						(knifes[i].x < bird->x + birdRadius && knifes[i].x > bird->x - birdRadius)) &&
+						knifes[i].y < bird->y + birdRadius - 20 && knifes[i].y>bird->y - birdRadius)
 					{
 						isGameOver = true;
 						isGameStart = false;
 					}
 				}
 				else {
-					knifes[i].reset(width + 50, height);
+					knifes[i].reset(width + 100, height);
 				}
 			}
 		}
@@ -134,20 +147,10 @@ void Game::render()
 	glPopMatrix();
 
 #pragma region Dev guideline (bird)
-	/*glPointSize(2);
-	glColor3i(0, 0, 0);
-	glBegin(GL_LINES);
-	glVertex2i(bird->x - bird->height / 2 * pow(bird->scale, 2), bird->y - bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x - bird->height / 2 * pow(bird->scale, 2), bird->y + bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x - bird->height / 2 * pow(bird->scale, 2), bird->y + bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x + bird->height / 2 * pow(bird->scale, 2), bird->y + bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x + bird->height / 2 * pow(bird->scale, 2), bird->y + bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x + bird->height / 2 * pow(bird->scale, 2), bird->y - bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x + bird->height / 2 * pow(bird->scale, 2), bird->y - bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x - bird->height / 2 * pow(bird->scale, 2), bird->y - bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x - bird->height / 2 * pow(bird->scale, 2), bird->y - bird->height / 2 * pow(bird->scale, 2));
-	glVertex2i(bird->x, bird->y);
-	glEnd();*/
+	if (dev)
+	{
+		bird->drawDevGuideLine();
+	}
 #pragma endregion
 
 	//knife
