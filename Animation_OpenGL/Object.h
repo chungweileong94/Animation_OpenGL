@@ -7,9 +7,11 @@ namespace Obj
 	{
 	public:
 		float scale = 1;
-		float x = 0, y = 0;
-
+		float rotation = 1;
+		float x = 0, y = 0; 
+		float speed = 1;
 		void draw();
+		void fly();
 	};
 
 	class Mountain
