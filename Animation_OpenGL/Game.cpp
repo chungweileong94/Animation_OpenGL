@@ -38,7 +38,7 @@ void Game::init()
 	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 		knifes[i].scale = .3;
 		knifes[i].rotation = 90;
-		knifes[i].reset(width - 100, height);
+		knifes[i].reset(width + 100, height);
 	}
 
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
