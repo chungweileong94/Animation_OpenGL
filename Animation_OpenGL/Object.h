@@ -11,7 +11,7 @@ namespace Obj
 		float x = 0, y = 0; 
 		float speed = 1;
 		void draw();
-		void fly();
+		void moveLeft();
 	};
 
 	class Mountain

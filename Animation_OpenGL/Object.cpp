@@ -152,7 +152,7 @@ void Obj::Bird::fly()
 	angle = 45;
 }
 
-void Obj::Knife::fly()
+void Obj::Knife::moveLeft()
 {
 	x -= speed;
 }

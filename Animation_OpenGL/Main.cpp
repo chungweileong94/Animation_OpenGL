@@ -14,7 +14,7 @@ void mouseControl(int button, int state, int x, int y);
 Game *game = new Game(width, height);
 
 void main(int argc, char** argv) {
-	//FreeConsole(); //hide console
+	FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
 	glutInitWindowSize(width, height);
