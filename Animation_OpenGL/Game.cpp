@@ -1,7 +1,6 @@
 #include "Game.h"
 #include <GL/glut.h>
 #include <string>
-#include <math.h>
 #include "Helper.h"
 #include "Geometry.h"
 
