@@ -22,6 +22,13 @@ void Obj::Knife::draw()
 	Geo::drawRectangle(27, 70, 54, 70, 54, 0, 27, 0);
 }
 
+void Obj::Knife::reset(float xPos, float maxHeight)
+{
+	x = xPos;
+	y = rand() % (int)maxHeight + 1;
+	speed = rand() % 2 + 1;
+}
+
 void Obj::Mountain::draw()
 {
 	glTranslatef(x, y, 0);

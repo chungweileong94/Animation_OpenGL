@@ -8,9 +8,12 @@ namespace Obj
 	public:
 		float scale = 1;
 		float rotation = 1;
-		float x = 0, y = 0; 
+		float x = 0, y = 0;
 		float speed = 1;
+		const float width = 81, height = 243;
+
 		void draw();
+		void reset(float xPos, float maxHeight);
 		void moveLeft();
 	};
 

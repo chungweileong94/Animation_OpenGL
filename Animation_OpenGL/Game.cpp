@@ -33,12 +33,10 @@ void Game::init()
 	bird->velocity = 0;
 	bird->angle = 0;
 
-	for (int i = 0; i < 3; i++) {
-		knifes[i].scale = .2;
+	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
+		knifes[i].scale = .3;
 		knifes[i].rotation = 90;
-		knifes[i].x = width;
-		knifes[i].y = rand() % height + 1;
-		knifes[i].speed = rand() % 2 + 1;
+		knifes[i].reset(width + 50, height);
 	}
 
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
@@ -76,23 +74,29 @@ void Game::update()
 		}
 		else {
 			bird->drop();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 				if (knifes[i].x >= -100) {
 					knifes[i].moveLeft();
-					float gap = bird->height / 2 * pow(bird->scale, 2);
-					if (knifes[i].x < bird->x + gap &&
-						knifes[i].x > bird->x - gap &&
-						knifes[i].y < bird->y + gap - 40 &&
-						knifes[i].y>bird->y - gap)
+
+					float birdRadius = bird->height / 2 * pow(bird->scale, 2);
+					float knifeWidth = knifes[i].width * pow(knifes[i].scale, 2);
+					float knifeRadius = knifeWidth / 2;
+
+					if (knifes[i].x - knifeWidth < bird->x + birdRadius &&
+						knifes[i].x - knifeWidth > bird->x - birdRadius &&
+						knifes[i].x - knifeRadius < bird->x + birdRadius &&
+						knifes[i].x - knifeRadius > bird->x - birdRadius &&
+						knifes[i].x < bird->x + birdRadius &&
+						knifes[i].x > bird->x - birdRadius &&
+						knifes[i].y < bird->y + birdRadius - 40 &&
+						knifes[i].y>bird->y - birdRadius)
 					{
 						isGameOver = true;
 						isGameStart = false;
 					}
 				}
 				else {
-					knifes[i].x = width;
-					knifes[i].y = rand() % height + 1;
-					knifes[i].speed = rand() % 2 + 1;
+					knifes[i].reset(width + 50, height);
 				}
 			}
 		}
