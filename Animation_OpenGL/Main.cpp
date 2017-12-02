@@ -41,6 +41,7 @@ void render()
 
 	game->render();
 	game->update();
+	game->checkCollision();
 
 	glFlush();
 	glutSwapBuffers();

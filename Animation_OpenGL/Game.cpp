@@ -83,30 +83,6 @@ void Game::update()
 			for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 				if (knifes[i].x >= -100) {
 					knifes[i].moveLeft();
-
-#pragma region Dev Guideline
-					if (dev)
-					{
-						glColor3f(1, 0, 0);
-						Geo::drawCircle(knifes[i].x, knifes[i].y, 10);
-						Geo::drawCircle(knifes[i].x - knifeRadius, knifes[i].y, 10);
-						Geo::drawCircle(knifes[i].x - knifeWidth, knifes[i].y, 10);
-
-						glColor3f(0, 0, 1);
-						Geo::drawCircle(bird->x + birdRadius, bird->y + birdRadius - 20, 10);
-						Geo::drawCircle(bird->x - birdRadius, bird->y - birdRadius, 10);
-					}
-#pragma endregion
-
-					if (((knifes[i].x - knifeWidth < bird->x + birdRadius && knifes[i].x - knifeWidth > bird->x - birdRadius) ||
-						(knifes[i].x - knifeRadius < bird->x + birdRadius && knifes[i].x - knifeRadius > bird->x - birdRadius) ||
-						(knifes[i].x < bird->x + birdRadius && knifes[i].x > bird->x - birdRadius)) &&
-						knifes[i].y < bird->y + birdRadius - 20 && knifes[i].y>bird->y - birdRadius)
-					{
-						isGameOver = true;
-						isGameStart = false;
-						return;
-					}
 				}
 				else {
 					knifes[i].reset(width + 100, height);
@@ -123,6 +99,47 @@ void Game::update()
 		drawText(title.data(), title.length(), width / 2, height / 2);
 		std::string desc = "Press 'Enter' to retry again";
 		drawText(desc.data(), desc.length(), width / 2, height / 2 - 28);
+	}
+}
+
+void Game::checkCollision()
+{
+	if (bird->y <= -100 || bird->y >= height) {
+		isGameOver = true;
+		isGameStart = false;
+		return;
+	}
+	else {
+		//check knife collision
+		float birdRadius = bird->getScaledRadius();
+		float knifeWidth = knifes[0].getScaledHeight();
+		float knifeRadius = knifeWidth / 2;
+
+		for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
+#pragma region Dev Guideline
+			if (dev)
+			{
+				glColor3f(1, 0, 0);
+				Geo::drawCircle(knifes[i].x, knifes[i].y, 10);
+				Geo::drawCircle(knifes[i].x - knifeRadius, knifes[i].y, 10);
+				Geo::drawCircle(knifes[i].x - knifeWidth, knifes[i].y, 10);
+
+				glColor3f(0, 0, 1);
+				Geo::drawCircle(bird->x + birdRadius, bird->y + birdRadius - 20, 10);
+				Geo::drawCircle(bird->x - birdRadius, bird->y - birdRadius, 10);
+			}
+#pragma endregion
+
+			if (((knifes[i].x - knifeWidth < bird->x + birdRadius && knifes[i].x - knifeWidth > bird->x - birdRadius) ||
+				(knifes[i].x - knifeRadius < bird->x + birdRadius && knifes[i].x - knifeRadius > bird->x - birdRadius) ||
+				(knifes[i].x < bird->x + birdRadius && knifes[i].x > bird->x - birdRadius)) &&
+				knifes[i].y < bird->y + birdRadius - 20 && knifes[i].y>bird->y - birdRadius)
+			{
+				isGameOver = true;
+				isGameStart = false;
+				return;
+			}
+		}
 	}
 }
 

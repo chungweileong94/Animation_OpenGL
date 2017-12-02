@@ -10,6 +10,7 @@ public:
 	Game(int width, int height, bool devMode);
 	void init();
 	void update();
+	void checkCollision();
 	void render();
 	void birdFly();
 
