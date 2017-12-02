@@ -12,7 +12,6 @@ void reshape(int newWidth, int newHeight);
 void keyboardControl(unsigned char key, int x, int y);
 void mouseControl(int button, int state, int x, int y);
 
-
 Intro *intro = new Intro(width, height);
 Game *game = new Game(width, height, false);
 bool isIntroDelete = false;
@@ -88,7 +87,7 @@ void keyboardControl(unsigned char key, int x, int y) {
 		break;
 
 	case ' ':
-		game->birdFly();
+		if (isIntroDelete) game->birdFly();
 		break;
 	}
 }
@@ -96,7 +95,7 @@ void keyboardControl(unsigned char key, int x, int y) {
 void mouseControl(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		game->birdFly();
+		if (isIntroDelete) game->birdFly();
 	}
 }
 
