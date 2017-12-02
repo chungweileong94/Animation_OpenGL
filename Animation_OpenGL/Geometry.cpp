@@ -50,6 +50,21 @@ void Geo::drawHalfCircle(float x, float y, float radius)
 	glEnd();
 }
 
+void Geo::drawBottomHalfCircle(float x, float y, float radius)
+{
+	float t = 0;
+	const int vertices = 500;
+
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < vertices; ++i)
+	{
+		glVertex2f(x + radius*cos(t), y - radius*sin(t));
+		t += PI / vertices;
+	}
+	glEnd();
+}
+
+
 void Geo::drawOval(float x, float y, float width, float height)
 {
 	float t = 0;

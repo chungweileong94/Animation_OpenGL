@@ -70,6 +70,42 @@ namespace Obj
 		const float gravity = .006;
 		const float lift = 1.5;
 	};
+
+	class Chatbox
+	{
+	public:
+		float scale = 1;
+		float x = 0, y = 0;
+
+		void draw();
+	};
+
+	class Tear
+	{
+	public:
+		float scale = 1;
+		float x = 0, y = 0;
+
+		void draw();
+	};
+
+	class Cage
+	{
+	public:
+		float scale = 1;
+		float x = 0, y = 0;
+
+		void draw();
+	};
+
+	class Hunter
+	{
+	public:
+		float scale = 1;
+		float x = 0, y = 0;
+
+		void draw();
+	};
 }
 
 #endif // !OBJECT_H

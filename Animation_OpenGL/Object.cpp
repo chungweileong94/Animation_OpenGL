@@ -196,3 +196,89 @@ float Obj::Knife::getScaledHeight()
 {
 	return height * scale;
 }
+
+
+void Obj::Chatbox::draw()
+{
+	glTranslatef(x, y, 0);
+	glScalef(scale, scale, 0);
+	//w:81 h:243
+	glColor3f(Helper::hexToFloat(220), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	Geo::drawRectangle(20, 20, 120, 20, 120, 80, 20, 80);
+	Geo::drawTriangle(0, 0, 20, 20, 20, 30);
+}
+
+void Obj::Tear::draw()
+{
+	glTranslatef(x, y, 0);
+	glScalef(scale, scale, 0);
+	//w:81 h:243
+	glColor3f(Helper::hexToFloat(220), Helper::hexToFloat(255), Helper::hexToFloat(255));
+	Geo::drawTriangle(0, 10, 10, 10, 5, 20);
+	Geo::drawBottomHalfCircle(5, 10, 5);
+}
+
+void Obj::Cage::draw()
+{
+	glTranslatef(x, y, 0);
+	glScalef(scale, scale, 0);
+	//w:81 h:243
+	glColor3f(Helper::hexToFloat(220), Helper::hexToFloat(220), Helper::hexToFloat(220));
+	Geo::drawRectangle(0, 0, 130, 0, 130, 10, 0, 10);
+	Geo::drawRectangle(10, 10, 30, 10, 30, 100, 10, 100);
+	Geo::drawRectangle(40, 10, 60, 10, 60, 100, 40, 100);
+	Geo::drawRectangle(70, 10, 90, 10, 90, 100, 70, 100);
+	Geo::drawRectangle(100, 10, 120, 10, 120, 100, 100, 100);
+	Geo::drawRectangle(0, 100, 130, 100, 130, 110, 0, 110);
+}
+
+void Obj::Hunter::draw()
+{
+	glTranslatef(x, y, 0);
+	glScalef(scale, scale, 0);
+	//w:81 h:243
+	//foot
+	glColor3f(Helper::hexToFloat(40), Helper::hexToFloat(200), Helper::hexToFloat(160));
+	Geo::drawRectangle(50, 0, 70, 0, 70, 10, 50, 10);
+	Geo::drawRectangle(90, 0, 110, 0, 110, 10, 90, 10);
+	//leg
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(240), Helper::hexToFloat(170));
+	Geo::drawRectangle(54, 10, 66, 10, 66, 24, 54, 24);
+	Geo::drawRectangle(94, 10, 106, 10, 106, 24, 94, 24);
+	//pants
+	glColor3f(Helper::hexToFloat(180), Helper::hexToFloat(150), Helper::hexToFloat(30));
+	Geo::drawRectangle(50, 24, 70, 24, 70, 44, 50, 44);
+	Geo::drawRectangle(90, 24, 110, 24, 110, 44, 90, 44);
+	Geo::drawTriangle(70, 24, 90, 44, 70, 44);
+	Geo::drawTriangle(90, 24, 70, 44, 90, 44);
+	//shirt
+	glColor3f(Helper::hexToFloat(170), Helper::hexToFloat(220), Helper::hexToFloat(20));
+	Geo::drawRectangle(50, 44, 110, 44, 110, 84, 50, 84);
+	Geo::drawTriangle(36, 64, 50, 64, 50, 84);
+	Geo::drawTriangle(110, 64, 124, 64, 110, 84);
+	//face
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(240), Helper::hexToFloat(170));
+	Geo::drawRectangle(50, 84, 110, 84, 110, 134, 50, 134);
+	//hair
+	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
+	Geo::drawHalfCircle(80, 134, 36);
+	Geo::drawTriangle(46,134, 50,130, 50,134);
+	Geo::drawTriangle(110, 130,114, 134,110,134);
+	//mouth
+	glColor3f(Helper::hexToFloat(100), Helper::hexToFloat(20), Helper::hexToFloat(20));
+	Geo::drawTriangle(80, 90, 90, 100, 70, 100);
+	//eye
+	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
+	//left eye
+	Geo::drawLine(62,114,68,124);
+	Geo::drawLine(68,124,74,114);
+	//right eye
+	Geo::drawLine(82, 114, 88, 124);
+	Geo::drawLine(88, 124, 94, 114);
+	//hand
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(240), Helper::hexToFloat(170));
+	Geo::drawRectangle(36,44,46,44,46,64,36,64);
+	Geo::drawRectangle(114,44,124,44,124,64,114,64);
+	Geo::drawCircle(41, 44, 6);
+	Geo::drawCircle(119, 44, 6);
+}

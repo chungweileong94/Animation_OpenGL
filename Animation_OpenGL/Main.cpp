@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <GL/glut.h>
+#include "Intro.h"
 #include "Game.h"
 
 const char* title = "Assignment 2";
@@ -11,6 +12,8 @@ void reshape(int newWidth, int newHeight);
 void keyboardControl(unsigned char key, int x, int y);
 void mouseControl(int button, int state, int x, int y);
 
+
+Intro *intro = new Intro(width, height);
 Game *game = new Game(width, height, false);
 
 void main(int argc, char** argv) {
@@ -26,6 +29,7 @@ void main(int argc, char** argv) {
 	glutKeyboardFunc(keyboardControl);
 	glutMouseFunc(mouseControl);
 
+	intro->init();
 	game->init();
 
 	glutMainLoop();
@@ -39,9 +43,11 @@ void render()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	game->render();
-	game->update();
-	game->checkCollision();
+	intro->render();
+	intro->update();
+	//game->render();
+	//game->update();
+	//game->checkCollision();
 
 	glFlush();
 	glutSwapBuffers();
