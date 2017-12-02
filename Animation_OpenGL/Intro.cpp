@@ -23,6 +23,22 @@ Intro::Intro(int width, int height)
 	init();
 }
 
+Intro::~Intro()
+{
+	delete cloud_1;
+	delete cloud_2;
+	delete bird;
+	delete bird_mom;
+	delete knife;
+	delete birdchatbox;
+	delete bird_momchatbox;
+	delete hunterchatbox;
+	delete hunter;
+	delete cage;
+	delete mountain;
+	delete tear;
+}
+
 void Intro::init()
 {
 	isIntroOver = false;
@@ -39,7 +55,7 @@ void Intro::init()
 	cloud_2->speed += .01;
 	knife->scale = 0.4;
 	knife->rotation = 90;
-	knife->x = width+100;
+	knife->x = width + 100;
 	knife->y = height / 2 + 40;
 	birdchatbox->scale = .8;
 	birdchatbox->x = width;
@@ -116,7 +132,7 @@ void Intro::update()
 		glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
 		std::string title;
 		title = "Mom!";
-		drawText(title.data(), title.length(), 506, height/3 + 36);
+		drawText(title.data(), title.length(), 506, height / 3 + 36);
 		if (bird_mom->y >= -100) {
 			bird_mom->angle += 0.6;
 			knife->rotation += 1.4;
@@ -133,10 +149,10 @@ void Intro::update()
 		glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
 		std::string bird_mom_title;
 		bird_mom_title = "HELP!";
-		std::string hunter_title1,hunter_title2;
+		std::string hunter_title1, hunter_title2;
 		hunter_title1 = "Dinner";
 		hunter_title2 = "Settle~";
-		
+
 		if (bird->x <= 100) {
 			bird->x += 1.0;
 		}
@@ -168,18 +184,12 @@ void Intro::update()
 				cage->x += 2.0;
 				bird_mom->x += 2.0;
 				bird->x += 2.0;
-
+				isIntroOver = true;
 			}
 		}
 		drawText(bird_mom_title.data(), bird_mom_title.length(), width - 42, height / 3 - 46);
 		drawText(hunter_title1.data(), hunter_title1.length(), width / 2 + 170, height / 3 + 50);
 		drawText(hunter_title2.data(), hunter_title2.length(), width / 2 + 170, height / 3 + 20);
-	}
-	else
-	{
-		//game->render();
-		//game->update();
-		//game->checkCollision();
 	}
 }
 
@@ -246,6 +256,26 @@ void Intro::render()
 	glPopMatrix();
 }
 
+void Intro::changeScene() {
+	birdchatbox->x = width;
+	birdchatbox->y = 170;
+	bird_momchatbox->x = width - 100;
+	hunterchatbox->x = width / 2 + 100;
+	bird->scale = 0.5;
+	bird->x = -100;
+	bird->y = 150;
+	bird_mom->scale = 0.5;
+	bird_mom->angle = 0;
+	bird_mom->x = width - 66;
+	bird_mom->y = 60;
+	hunter->x = width / 2;
+	cloud_1->scale = 0.6;
+	cloud_2->scale = 0.5;
+	cloud_1->y = height - 170;
+	cloud_2->y = height - 130;
+	cage->x = width - 150;
+	mountain->x = -100;
+}
 
 void Intro::drawText(const char * text, GLint length, GLfloat x, GLfloat y)
 {
@@ -273,25 +303,4 @@ void Intro::drawText(const char * text, GLint length, GLfloat x, GLfloat y)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(matrix);
 	glMatrixMode(GL_MODELVIEW);
-}
-
-void Intro::changeScene() {
-	birdchatbox->x = width;
-	birdchatbox->y = 170;
-	bird_momchatbox -> x = width - 100;
-	hunterchatbox->x = width / 2 + 100;
-	bird->scale = 0.5;
-	bird->x = -100;
-	bird->y = 150;
-	bird_mom->scale = 0.5;
-	bird_mom->angle = 0;
-	bird_mom->x = width - 66;
-	bird_mom->y = 60;
-	hunter->x = width / 2;
-	cloud_1->scale = 0.6;
-	cloud_2->scale = 0.5;
-	cloud_1->y = height - 170;
-	cloud_2->y = height - 130;
-	cage->x = width - 150;
-	mountain->x = -100;
 }

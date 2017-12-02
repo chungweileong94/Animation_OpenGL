@@ -15,6 +15,7 @@ void mouseControl(int button, int state, int x, int y);
 
 Intro *intro = new Intro(width, height);
 Game *game = new Game(width, height, false);
+bool isIntroDelete = false;
 
 void main(int argc, char** argv) {
 	FreeConsole(); //hide console
@@ -43,11 +44,25 @@ void render()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	intro->render();
-	intro->update();
-	//game->render();
-	//game->update();
-	//game->checkCollision();
+	if (!isIntroDelete)
+	{
+		if (!intro->isIntroOver)
+		{
+			intro->render();
+			intro->update();
+		}
+		else
+		{
+			delete intro;
+			isIntroDelete = true;
+		}
+	}
+	else
+	{
+		game->render();
+		game->update();
+		game->checkCollision();
+	}
 
 	glFlush();
 	glutSwapBuffers();

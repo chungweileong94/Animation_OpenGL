@@ -9,7 +9,7 @@ class Intro
 {
 public:
 	Intro(int width, int height);
-	//~Intro();
+	~Intro();
 	void init();
 	void update();
 	void render();
@@ -19,8 +19,6 @@ public:
 	bool isKnifeFly;
 	bool isMomBeenCut;
 	bool isMomFall;
-
-	//Game *game = new Game(width, height,false);
 
 private:
 	void drawText(const char *text, GLint length, GLfloat x, GLfloat y);
