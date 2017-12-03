@@ -80,6 +80,7 @@ void Intro::init()
 	bird->scale = .7;
 	bird->x = 400;
 	bird->y = height / 3;
+	bird->speed = 1.2;
 	bird->angle = 0;
 	bird_mom->scale = 1.2;
 	bird_mom->x = 200;
@@ -141,7 +142,7 @@ void Intro::update()
 		hunter_chat_text = "Dinner\\SETTLE~";
 
 		if (bird->x <= 100) {
-			bird->moveRight(.8);
+			bird->moveRight((bird->x < 40) ? 2 : .8);
 		}
 		else {
 			bird_chat_box->x = 130;
@@ -169,7 +170,8 @@ void Intro::update()
 						hunter->moveRight(1.6);
 						cage->moveRight(1.8);
 						bird_mom->moveRight(1.8);
-						bird->moveRight(1.2);
+						bird->moveRight((hunter->x >= width - 50) ? bird->speed : 0);
+						bird->speed += .01;
 					}
 					else
 					{
