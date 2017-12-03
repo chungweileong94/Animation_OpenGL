@@ -180,11 +180,15 @@ void Intro::update()
 				birdchatbox->x = width;
 				hunterchatbox->x = width;
 				bird_momchatbox->x = width;
-				hunter->x += 2.0;
-				cage->x += 2.0;
-				bird_mom->x += 2.0;
-				bird->x += 2.0;
-				isIntroOver = true;
+				if (bird->x <= width + 50) {
+					hunter->x += 2.0;
+					cage->x += 2.0;
+					bird_mom->x += 2.0;
+					bird->x += 2.0;
+				}
+				else {
+					isIntroOver = true;
+				}
 			}
 		}
 		drawText(bird_mom_title.data(), bird_mom_title.length(), width - 42, height / 3 - 46);
