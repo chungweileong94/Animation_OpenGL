@@ -36,7 +36,7 @@ void Game::init()
 
 	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 		knifes[i].scale = .3;
-		knifes[i].rotation = 90;
+		knifes[i].angle = 90;
 		knifes[i].reset(width + 100, height);
 	}
 
@@ -55,9 +55,9 @@ void Game::update()
 	if (mountain->x <= -860) {
 		mountain->x = width;
 	}
-	cloud_1->x -= cloud_1->speed;
-	cloud_2->x -= cloud_2->speed;
-	mountain->x -= mountain->speed;
+	cloud_1->moveleft();
+	cloud_2->moveleft();
+	mountain->moveleft();
 
 	//check game status
 	if (!isGameStart && !isGameOver)
@@ -82,7 +82,7 @@ void Game::update()
 
 			for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 				if (knifes[i].x >= -100) {
-					knifes[i].moveLeft();
+					knifes[i].moveLeft(knifes[i].speed);
 				}
 				else {
 					knifes[i].reset(width + 100, height);

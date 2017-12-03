@@ -7,14 +7,14 @@ namespace Obj
 	{
 	public:
 		float scale = 1;
-		float rotation = 1;
+		float angle = 1;
 		float x = 0, y = 0;
 		float speed = 1;
 
-
 		void draw();
 		void reset(float xPos, float maxHeight);
-		void moveLeft();
+		void moveLeft(float speed);
+		void fall();
 		float getScaledHeight();
 
 	private:
@@ -29,6 +29,7 @@ namespace Obj
 		const float speed = .5;
 
 		void draw();
+		void moveleft();
 	};
 
 	class Cloud
@@ -40,6 +41,7 @@ namespace Obj
 		int color[3] = { 255, 220, 31 };
 
 		void draw();
+		void moveleft();
 	};
 
 	class Wood
@@ -58,11 +60,13 @@ namespace Obj
 		float x = 0, y = 0;
 		float velocity = 0;
 		float angle = 0;
-		
+
 		void draw();
 		void drawDevGuideLine();
 		void drop();
 		void fly();
+		void fall();
+		void moveRight(float speed);
 		float getScaledRadius();
 
 	private:
@@ -87,6 +91,7 @@ namespace Obj
 		float x = 0, y = 0;
 
 		void draw();
+		void drop(float speed);
 	};
 
 	class Cage
@@ -96,6 +101,7 @@ namespace Obj
 		float x = 0, y = 0;
 
 		void draw();
+		void moveRight(float speed);
 	};
 
 	class Hunter
@@ -105,6 +111,7 @@ namespace Obj
 		float x = 0, y = 0;
 
 		void draw();
+		void moveRight(float speed);
 	};
 }
 

@@ -74,7 +74,7 @@ void update(int value)
 	if (!isIntroDelete)
 	{
 		intro->update();
-		glutTimerFunc(5, update, 0);
+		glutTimerFunc(6, update, 0);
 	}
 }
 

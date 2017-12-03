@@ -13,7 +13,7 @@ void Obj::Knife::draw()
 
 	glPushMatrix();
 
-	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+	glRotatef(angle, 0.0f, 0.0f, 1.0f);
 	//w:81 h:243
 	glColor3f(Helper::hexToFloat(200), Helper::hexToFloat(191), Helper::hexToFloat(231));
 	Geo::drawTriangle(14, 87, 40.5, 243, 40.5, 87);
@@ -50,6 +50,11 @@ void Obj::Mountain::draw()
 	Geo::drawTriangle(526, 198, 601, 284, 676, 198);
 }
 
+void Obj::Mountain::moveleft()
+{
+	x -= speed;
+}
+
 void Obj::Cloud::draw()
 {
 	glTranslatef(x, y, 0);
@@ -69,6 +74,11 @@ void Obj::Cloud::draw()
 	Geo::drawCircle(99, 50, 28);
 	Geo::drawCircle(140, 28, 28);
 	Geo::drawRectangle(28, 0, 28, 40, 140, 40, 140, 0);
+}
+
+void Obj::Cloud::moveleft()
+{
+	x -= speed;
 }
 
 void Obj::Wood::draw()
@@ -182,14 +192,32 @@ void Obj::Bird::fly()
 	angle = 45;
 }
 
+void Obj::Bird::fall()
+{
+	angle += 1;
+	x -= .8;
+	y -= 1.2;
+}
+
+void Obj::Bird::moveRight(float speed)
+{
+	x += speed;
+}
+
 float Obj::Bird::getScaledRadius()
 {
 	return height / 2 * pow(scale, 2);
 }
 
-void Obj::Knife::moveLeft()
+void Obj::Knife::moveLeft(float speed)
 {
 	x -= speed;
+}
+
+void Obj::Knife::fall()
+{
+	angle += 3;
+	y -= 1.2;
 }
 
 float Obj::Knife::getScaledHeight()
@@ -213,9 +241,21 @@ void Obj::Tear::draw()
 	glTranslatef(x, y, 0);
 	glScalef(scale, scale, 0);
 	//w:81 h:243
-	glColor3f(Helper::hexToFloat(220), Helper::hexToFloat(255), Helper::hexToFloat(255));
+
+	//shadow
+	int shadowX = -5, shadowY = -5;
+	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(120), Helper::hexToFloat(172));
+	Geo::drawTriangle(0 + shadowX, 10 + shadowY, 10 + shadowX, 10 + shadowY, 5 + shadowX, 20 + shadowY);
+	Geo::drawBottomHalfCircle(5 + shadowX, 10 + shadowY, 5);
+
+	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(162), Helper::hexToFloat(232));
 	Geo::drawTriangle(0, 10, 10, 10, 5, 20);
 	Geo::drawBottomHalfCircle(5, 10, 5);
+}
+
+void Obj::Tear::drop(float speed)
+{
+	y -= speed;
 }
 
 void Obj::Cage::draw()
@@ -230,6 +270,11 @@ void Obj::Cage::draw()
 	Geo::drawRectangle(70, 10, 90, 10, 90, 100, 70, 100);
 	Geo::drawRectangle(100, 10, 120, 10, 120, 100, 100, 100);
 	Geo::drawRectangle(0, 100, 130, 100, 130, 110, 0, 110);
+}
+
+void Obj::Cage::moveRight(float speed)
+{
+	x += speed;
 }
 
 void Obj::Hunter::draw()
@@ -262,23 +307,28 @@ void Obj::Hunter::draw()
 	//hair
 	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
 	Geo::drawHalfCircle(80, 134, 36);
-	Geo::drawTriangle(46,134, 50,130, 50,134);
-	Geo::drawTriangle(110, 130,114, 134,110,134);
+	Geo::drawTriangle(46, 134, 50, 130, 50, 134);
+	Geo::drawTriangle(110, 130, 114, 134, 110, 134);
 	//mouth
 	glColor3f(Helper::hexToFloat(100), Helper::hexToFloat(20), Helper::hexToFloat(20));
 	Geo::drawTriangle(80, 90, 90, 100, 70, 100);
 	//eye
 	glColor3f(Helper::hexToFloat(0), Helper::hexToFloat(0), Helper::hexToFloat(0));
 	//left eye
-	Geo::drawLine(62,114,68,124);
-	Geo::drawLine(68,124,74,114);
+	Geo::drawLine(62, 114, 68, 124);
+	Geo::drawLine(68, 124, 74, 114);
 	//right eye
 	Geo::drawLine(82, 114, 88, 124);
 	Geo::drawLine(88, 124, 94, 114);
 	//hand
 	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(240), Helper::hexToFloat(170));
-	Geo::drawRectangle(36,44,46,44,46,64,36,64);
-	Geo::drawRectangle(114,44,124,44,124,64,114,64);
+	Geo::drawRectangle(36, 44, 46, 44, 46, 64, 36, 64);
+	Geo::drawRectangle(114, 44, 124, 44, 124, 64, 114, 64);
 	Geo::drawCircle(41, 44, 6);
 	Geo::drawCircle(119, 44, 6);
+}
+
+void Obj::Hunter::moveRight(float speed)
+{
+	x += speed;
 }

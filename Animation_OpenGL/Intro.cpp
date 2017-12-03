@@ -55,7 +55,8 @@ void Intro::init()
 	cloud_2->color[2] = 39;
 	cloud_2->speed += .01;
 	knife->scale = 0.4;
-	knife->rotation = 90;
+	knife->angle = 90;
+	knife->speed = 1.5;
 	knife->x = width + 100;
 	knife->y = height / 2 + 40;
 	bird_chat_box->scale = .8;
@@ -99,8 +100,8 @@ void Intro::update()
 	if (cloud_2->x <= -200) {
 		cloud_2->x = width + 10;
 	}
-	cloud_1->x -= cloud_1->speed;
-	cloud_2->x -= cloud_2->speed;
+	cloud_1->moveleft();
+	cloud_2->moveleft();
 
 	//check animation state
 	if (!isIntroOver && !isKnifeFly && !isMomBeenCut && !isMomFall)
@@ -113,8 +114,8 @@ void Intro::update()
 	else if (!isIntroOver && isKnifeFly && !isMomBeenCut && !isMomFall)
 	{
 		story_telling_text = "Suddenly...";
-		if (knife->x >= width / 2 + 60) {
-			knife->x -= 1.5;
+		if (knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2) {
+			knife->moveLeft(1.5);
 		}
 		else {
 			isMomBeenCut = true;
@@ -126,10 +127,8 @@ void Intro::update()
 		bird_chat_box->x = 450;
 		bird_chat_text = "Mom!";
 		if (bird_mom->y >= -100) {
-			bird_mom->angle += 0.6;
-			knife->rotation += 1.4;
-			bird_mom->y -= 1.2;
-			knife->y -= 1.2;
+			bird_mom->fall();
+			knife->fall();
 		}
 		else {
 			isMomFall = true;
@@ -142,7 +141,7 @@ void Intro::update()
 		hunter_chat_text = "Dinner\\SETTLE~";
 
 		if (bird->x <= 100) {
-			bird->x += 1.0;
+			bird->moveRight(.8);
 		}
 		else {
 			bird_chat_box->x = 130;
@@ -153,19 +152,29 @@ void Intro::update()
 				tear->y -= 0.06;
 				tear->scale += 0.003;
 			}
-			else {
-				tear->x = width;
-				bird_chat_box->x = width;
-				hunter_chat_box->x = width;
-				bird_mom_chat_box->x = width;
-				if (bird->x <= width + 50) {
-					hunter->x += 2.0;
-					cage->x += 2.0;
-					bird_mom->x += 2.0;
-					bird->x += 2.0;
+			else
+			{
+				if (tear->y > 0)
+				{
+					tear->drop(.8);
 				}
-				else {
-					isIntroOver = true;
+				else
+				{
+					tear->x = width;
+					bird_chat_box->x = width;
+					hunter_chat_box->x = width;
+					bird_mom_chat_box->x = width;
+					if (bird->x <= width + 50)
+					{
+						hunter->moveRight(1.8);
+						cage->moveRight(2);
+						bird_mom->moveRight(2);
+						bird->moveRight(1.5);
+					}
+					else
+					{
+						isIntroOver = true;
+					}
 				}
 			}
 		}
