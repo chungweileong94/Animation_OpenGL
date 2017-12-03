@@ -18,8 +18,6 @@ public:
 	bool isGameOver;
 
 private:
-	void drawText(const char *text, GLint length, GLfloat x, GLfloat y);
-
 	bool dev;
 	int width, height;
 	Obj::Mountain* mountain;

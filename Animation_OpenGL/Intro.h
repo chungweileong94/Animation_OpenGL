@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include <GL/glut.h>
+#include <string>
 #include "Game.h"
 
 class Intro
@@ -21,17 +22,19 @@ public:
 	bool isMomFall;
 
 private:
-	void drawText(const char *text, GLint length, GLfloat x, GLfloat y);
-
 	int width, height;
+	std::string story_telling_text;
+	std::string bird_chat_text;
+	std::string bird_mom_chat_text;
+	std::string hunter_chat_text;
 	Obj::Cloud* cloud_1;
 	Obj::Cloud* cloud_2;
 	Obj::Bird* bird;
 	Obj::Bird* bird_mom;
 	Obj::Knife* knife;
-	Obj::Chatbox* birdchatbox;
-	Obj::Chatbox* bird_momchatbox;
-	Obj::Chatbox* hunterchatbox;
+	Obj::Chatbox* bird_chat_box;
+	Obj::Chatbox* bird_mom_chat_box;
+	Obj::Chatbox* hunter_chat_box;
 	Obj::Tear* tear;
 	Obj::Cage* cage;
 	Obj::Hunter* hunter;

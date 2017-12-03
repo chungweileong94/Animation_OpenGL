@@ -64,7 +64,7 @@ void Game::update()
 	{
 		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
 		std::string title = "Tap 'Spacebar' or 'Left-click' to start";
-		drawText(title.data(), title.length(), width / 2, height / 2);
+		Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
 		return;
 	}
 	else if (isGameStart && !isGameOver)
@@ -96,9 +96,9 @@ void Game::update()
 	{
 		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
 		std::string title = "GAME OVER";
-		drawText(title.data(), title.length(), width / 2, height / 2);
+		Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
 		std::string desc = "Press 'Enter' to retry again";
-		drawText(desc.data(), desc.length(), width / 2, height / 2 - 28);
+		Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
 	}
 }
 
@@ -187,32 +187,4 @@ void Game::birdFly()
 		bird->fly();
 	else
 		isGameStart = true;
-}
-
-void Game::drawText(const char * text, GLint length, GLfloat x, GLfloat y)
-{
-	glMatrixMode(GL_PROJECTION);
-	double *matrix = new double[16];
-	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
-	glLoadIdentity();
-	gluOrtho2D(0, width, 0, height);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glPushMatrix();
-	glLoadIdentity();
-
-	//width of the string
-	unsigned int string_width = 0;
-	for (const char *c = text; *c != NULL; c++)
-		string_width += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, *c);
-
-	glRasterPos2f(x - string_width / 2, y);
-	for (const char *c = text; *c != NULL; c++)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
-	glPopMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixd(matrix);
-	glMatrixMode(GL_MODELVIEW);
 }

@@ -8,6 +8,7 @@ const int width = 600;
 const int height = 600;
 
 void render();
+void update(int value);
 void reshape(int newWidth, int newHeight);
 void keyboardControl(unsigned char key, int x, int y);
 void mouseControl(int button, int state, int x, int y);
@@ -25,6 +26,7 @@ void main(int argc, char** argv) {
 	glutCreateWindow(title);
 
 	glutDisplayFunc(render);
+	glutTimerFunc(5, update, 0);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboardControl);
 	glutMouseFunc(mouseControl);
@@ -48,7 +50,6 @@ void render()
 		if (!intro->isIntroOver)
 		{
 			intro->render();
-			intro->update();
 		}
 		else
 		{
@@ -66,6 +67,15 @@ void render()
 	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
+}
+
+void update(int value)
+{
+	if (!isIntroDelete)
+	{
+		intro->update();
+		glutTimerFunc(5, update, 0);
+	}
 }
 
 void reshape(int newWidth, int newHeight)
