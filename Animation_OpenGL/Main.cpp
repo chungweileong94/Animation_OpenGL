@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <GL/glut.h>
+#include <string>
 #include "Intro.h"
 #include "Game.h"
 
@@ -13,11 +14,25 @@ void reshape(int newWidth, int newHeight);
 void keyboardControl(unsigned char key, int x, int y);
 void mouseControl(int button, int state, int x, int y);
 
-Intro *intro = new Intro(width, height);
-Game *game = new Game(width, height, false);
+Intro *intro;
+Game *game;
+bool isDevMode = false;
 bool isIntroDelete = false;
 
 void main(int argc, char** argv) {
+	for (int c = 1; c < argc; c++)
+	{
+		std::string arg = argv[c];
+		if (arg == "d")
+		{
+			isDevMode = true;
+		}
+		if (arg == "s")
+		{
+			isIntroDelete = true;
+		}
+	}
+
 	FreeConsole(); //hide console
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
@@ -31,6 +46,8 @@ void main(int argc, char** argv) {
 	glutKeyboardFunc(keyboardControl);
 	glutMouseFunc(mouseControl);
 
+	intro = new Intro(width, height);
+	game = new Game(width, height, isDevMode);
 	intro->init();
 	game->init();
 
