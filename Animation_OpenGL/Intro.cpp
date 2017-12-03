@@ -135,19 +135,19 @@ void Intro::update()
 			isMomFall = true;
 			glFlush();
 			changeScene();
-			waitingCountDown = 100;
+			waitingCountDown[0] = 100;
 		}
 	}
 	else if (!isIntroOver && isKnifeFly && isMomBeenCut && isMomFall) {
 		bird_mom_chat_text = "HELP!";
 		hunter_chat_text = "Dinner\\SETTLE~";
 
-		if (bird->x <= 100 && waitingCountDown > 0) {
+		if (bird->x <= 100 && waitingCountDown[0] > 0) {
 			bird->moveRight((bird->x < 40) ? 2 : .8);
 		}
-		else if (waitingCountDown > 0)
+		else if (waitingCountDown[0] > 0)
 		{
-			waitingCountDown -= 1;
+			waitingCountDown[0] -= 1;
 		}
 		else
 		{
@@ -155,6 +155,7 @@ void Intro::update()
 			bird_chat_text = "Let her\\  GO!";
 			hunter_chat_text = "  NO\\WAY!!";
 			tear->x = 126;
+
 			if (tear->scale <= 1) {
 				tear->y -= 0.06;
 				tear->scale += 0.003;
@@ -164,6 +165,7 @@ void Intro::update()
 				if (tear->y > 0)
 				{
 					tear->drop(.8);
+					waitingCountDown[1] = 240;
 				}
 				else
 				{
@@ -171,13 +173,18 @@ void Intro::update()
 					bird_chat_box->x = width;
 					hunter_chat_box->x = width;
 					bird_mom_chat_box->x = width;
-					if (bird->x <= width + 50)
+
+					if (bird->x <= width + 80 && waitingCountDown[1] > 0)
 					{
 						hunter->moveRight(1.6);
 						cage->moveRight(1.8);
 						bird_mom->moveRight(1.8);
 						bird->moveRight((hunter->x >= width - 50) ? bird->speed : 0);
 						bird->speed += .01;
+					}
+					else if (waitingCountDown[1] > 0)
+					{
+						waitingCountDown[1] -= 1;
 					}
 					else
 					{
