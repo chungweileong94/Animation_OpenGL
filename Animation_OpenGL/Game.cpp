@@ -161,6 +161,14 @@ void Game::render()
 	cloud_2->draw();
 	glPopMatrix();
 
+	//knife
+	for each (Obj::Knife knife in knifes)
+	{
+		glPushMatrix();
+		knife.draw();
+		glPopMatrix();
+	}
+
 	//bird
 	glPushMatrix();
 	bird->draw();
@@ -172,14 +180,6 @@ void Game::render()
 		bird->drawDevGuideLine();
 	}
 #pragma endregion
-
-	//knife
-	for each (Obj::Knife knife in knifes)
-	{
-		glPushMatrix();
-		knife.draw();
-		glPopMatrix();
-	}
 }
 
 void Game::birdFly()
