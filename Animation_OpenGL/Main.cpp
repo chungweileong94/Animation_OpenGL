@@ -47,15 +47,7 @@ void render()
 
 	if (!isIntroDelete)
 	{
-		if (!intro->isIntroOver)
-		{
-			intro->render();
-		}
-		else
-		{
-			delete intro;
-			isIntroDelete = true;
-		}
+		intro->render();
 	}
 	else
 	{
@@ -73,8 +65,16 @@ void update(int value)
 {
 	if (!isIntroDelete)
 	{
-		intro->update();
-		glutTimerFunc(6, update, 0);
+		if (!intro->isIntroOver)
+		{
+			intro->update();
+			glutTimerFunc(6, update, 0);
+		}
+		else
+		{
+			delete intro;
+			isIntroDelete = true;
+		}
 	}
 }
 
