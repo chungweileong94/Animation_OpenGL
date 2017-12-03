@@ -116,7 +116,7 @@ void Intro::update()
 	{
 		story_telling_text = "Suddenly...";
 		if (knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2) {
-			knife->moveLeft(1.5);
+			knife->moveLeft((knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2 + 60) ? 1.5 : 0.2);
 		}
 		else {
 			isMomBeenCut = true;
