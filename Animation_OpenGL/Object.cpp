@@ -3,6 +3,7 @@
 #include "Geometry.h"
 #include "Helper.h"
 #include <math.h>
+#include <time.h>
 
 #define PI 3.14159265
 
@@ -79,32 +80,6 @@ void Obj::Cloud::draw()
 void Obj::Cloud::moveleft()
 {
 	x -= speed;
-}
-
-void Obj::Wood::draw()
-{
-	glTranslatef(x, y, 0);
-	glScalef(scale, scale, 0);
-
-	//w: 158 h:391
-	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
-	Geo::drawRectangle(0, 0, 0, 391, 158, 391, 158, 0);
-
-	glColor3f(Helper::hexToFloat(91), Helper::hexToFloat(57), Helper::hexToFloat(38));
-	glLineWidth(5);
-	Geo::drawLine(39, 203, 39, 334);
-	Geo::drawLine(50, 24, 50, 138);
-	Geo::drawLine(75, 87, 75, 210);
-	Geo::drawLine(116, 30, 116, 120);
-	Geo::drawLine(134, 188, 134, 328);
-
-	Geo::drawOval(95, 283, 48, 98);
-	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
-	Geo::drawOval(95, 283, 37, 87);
-	glColor3f(Helper::hexToFloat(91), Helper::hexToFloat(57), Helper::hexToFloat(38));
-	Geo::drawOval(97, 278, 20, 40);
-	glColor3f(Helper::hexToFloat(150), Helper::hexToFloat(94), Helper::hexToFloat(63));
-	Geo::drawOval(97, 278, 9, 29);
 }
 
 void Obj::Bird::draw()
@@ -202,6 +177,14 @@ void Obj::Bird::fall()
 void Obj::Bird::moveRight(float speed)
 {
 	x += speed;
+	if (step)
+	{
+		angle += 5;
+	}
+	else {
+		angle -= 5;
+	}
+	step = !step;
 }
 
 float Obj::Bird::getScaledRadius()
@@ -280,6 +263,7 @@ void Obj::Cage::moveRight(float speed)
 void Obj::Hunter::draw()
 {
 	glTranslatef(x, y, 0);
+	glRotatef(angle, 0, 0, 1);
 	glScalef(scale, scale, 0);
 	//w:81 h:243
 	//foot
@@ -331,4 +315,12 @@ void Obj::Hunter::draw()
 void Obj::Hunter::moveRight(float speed)
 {
 	x += speed;
+	if (step)
+	{
+		angle += 2;
+	}
+	else {
+		angle -= 2;
+	}
+	step = !step;
 }

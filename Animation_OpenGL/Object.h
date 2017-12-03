@@ -44,15 +44,6 @@ namespace Obj
 		void moveleft();
 	};
 
-	class Wood
-	{
-	public:
-		float scale = 1;
-		float x = 0, y = 0;
-
-		void draw();
-	};
-
 	class Bird
 	{
 	public:
@@ -73,6 +64,7 @@ namespace Obj
 		const float width = 230, height = 392;
 		const float gravity = .006;
 		const float lift = 1.5;
+		bool step = false;
 	};
 
 	class Chatbox
@@ -112,6 +104,10 @@ namespace Obj
 
 		void draw();
 		void moveRight(float speed);
+
+	private:
+		bool step = false;
+		float angle = 0;
 	};
 }
 
