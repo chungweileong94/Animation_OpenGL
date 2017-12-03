@@ -23,6 +23,7 @@ public:
 
 private:
 	int width, height;
+	int waitingCountDown;
 	std::string story_telling_text;
 	std::string bird_chat_text;
 	std::string bird_mom_chat_text;

@@ -135,16 +135,22 @@ void Intro::update()
 			isMomFall = true;
 			glFlush();
 			changeScene();
+			waitingCountDown = 100;
 		}
 	}
 	else if (!isIntroOver && isKnifeFly && isMomBeenCut && isMomFall) {
 		bird_mom_chat_text = "HELP!";
 		hunter_chat_text = "Dinner\\SETTLE~";
 
-		if (bird->x <= 100) {
+		if (bird->x <= 100 && waitingCountDown > 0) {
 			bird->moveRight((bird->x < 40) ? 2 : .8);
 		}
-		else {
+		else if (waitingCountDown > 0)
+		{
+			waitingCountDown -= 1;
+		}
+		else
+		{
 			bird_chat_box->x = 130;
 			bird_chat_text = "Let her\\  GO!";
 			hunter_chat_text = "  NO\\WAY!!";
