@@ -120,9 +120,9 @@ void Game::checkCollision()
 			if (dev)
 			{
 				glColor3f(1, 0, 0);
-				Geo::drawCircle(knifes[i].x, knifes[i].y, 10);
-				Geo::drawCircle(knifes[i].x - knifeRadius, knifes[i].y, 10);
-				Geo::drawCircle(knifes[i].x - knifeWidth, knifes[i].y, 10);
+				Geo::drawCircle(knifes[i].x, knifes[i].y + knifes[i].getScaledWidth() / 2, 10);
+				Geo::drawCircle(knifes[i].x - knifeRadius, knifes[i].y + knifes[i].getScaledWidth() / 2, 10);
+				Geo::drawCircle(knifes[i].x - knifeWidth, knifes[i].y + knifes[i].getScaledWidth() / 2, 10);
 
 				glColor3f(0, 0, 1);
 				Geo::drawCircle(bird->x + birdRadius, bird->y + birdRadius - 20, 10);
@@ -133,7 +133,8 @@ void Game::checkCollision()
 			if (((knifes[i].x - knifeWidth < bird->x + birdRadius && knifes[i].x - knifeWidth > bird->x - birdRadius) ||
 				(knifes[i].x - knifeRadius < bird->x + birdRadius && knifes[i].x - knifeRadius > bird->x - birdRadius) ||
 				(knifes[i].x < bird->x + birdRadius && knifes[i].x > bird->x - birdRadius)) &&
-				knifes[i].y < bird->y + birdRadius - 20 && knifes[i].y>bird->y - birdRadius)
+				knifes[i].y + knifes[i].getScaledWidth() / 2 < bird->y + birdRadius - 20 &&
+				knifes[i].y + knifes[i].getScaledWidth() / 2 > bird->y - birdRadius)
 			{
 				isGameOver = true;
 				isGameStart = false;

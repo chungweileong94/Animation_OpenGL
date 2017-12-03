@@ -166,10 +166,10 @@ void Intro::update()
 					bird_mom_chat_box->x = width;
 					if (bird->x <= width + 50)
 					{
-						hunter->moveRight(1.8);
-						cage->moveRight(2);
-						bird_mom->moveRight(2);
-						bird->moveRight(1.5);
+						hunter->moveRight(1.6);
+						cage->moveRight(1.8);
+						bird_mom->moveRight(1.8);
+						bird->moveRight(1.2);
 					}
 					else
 					{

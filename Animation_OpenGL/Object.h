@@ -16,6 +16,7 @@ namespace Obj
 		void moveLeft(float speed);
 		void fall();
 		float getScaledHeight();
+		float getScaledWidth();
 
 	private:
 		const float width = 81, height = 243;

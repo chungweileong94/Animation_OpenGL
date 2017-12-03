@@ -208,6 +208,11 @@ float Obj::Knife::getScaledHeight()
 	return height * scale;
 }
 
+float Obj::Knife::getScaledWidth()
+{
+	return width * scale;
+}
+
 
 void Obj::Chatbox::draw()
 {
