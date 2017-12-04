@@ -45,9 +45,6 @@ Intro::~Intro()
 void Intro::init()
 {
 	isIntroOver = false;
-	isKnifeFly = false;
-	isMomBeenCut = false;
-	isMomFall = false;
 	isLoading = false;
 
 	cloud_1->x = 300;
@@ -93,7 +90,6 @@ void Intro::init()
 	tear->y = 126;
 	tear->scale = 0.3;
 	cover->reset(height);
-	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
 }
 
 void Intro::update()
@@ -108,114 +104,28 @@ void Intro::update()
 	cloud_1->moveleft();
 	cloud_2->moveleft();
 
-	//check animation state
-	if (!isIntroOver && !isKnifeFly && !isMomBeenCut && !isMomFall)
-	{
-		story_telling_text = "One day... Little bird is flying togather with its mom...";
-		if (cloud_1->x - 200 <= 0) {
-			isKnifeFly = true;
-		}
-	}
 	//=====================================
 	//screen 1
 	//=====================================
-	else if (!isIntroOver && isKnifeFly && !isMomBeenCut && !isMomFall)
+	if (scene_1_parts[0] == false ||
+		scene_1_parts[1] == false ||
+		scene_1_parts[2] == false)
 	{
-		story_telling_text = "Suddenly...";
-		if (knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2) {
-			//knife->moveLeft((knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2 + 60) ? 1.5 : 0.2);
-			knife->moveLeft(bird->speed);
-			if (bird->speed > 0.2)
-			{
-				bird->speed -= .0035;
-			}
-		}
-		else {
-			isMomBeenCut = true;
-
-		}
-	}
-	else if (!isIntroOver && isKnifeFly && isMomBeenCut && !isMomFall)
-	{
-		story_telling_text = "";
-		bird_chat_box->x = 450;
-		bird_chat_text = "Mom!";
-		if (bird_mom->y >= -100) {
-			bird_mom->fall();
-			knife->fall();
-		}
-		else {
-			isMomFall = true;
-			glFlush();
-			changeScene();
-
-
-			//setup value for next screen
-			bird->speed = 1.5;
-			waitingCountDown[0] = 100;
-		}
+		scene_1_update();
 	}
 	//=====================================
 	//screen 2
 	//=====================================
-	else if (!isIntroOver && isKnifeFly && isMomBeenCut && isMomFall) {
-		bird_mom_chat_text = "HELP!";
-		hunter_chat_text = "Dinner\\SETTLE~";
-
-		if (bird->x <= 100 && waitingCountDown[0] > 0) {
-			bird->moveRight((bird->x < 40) ? 2 : .8);
-		}
-		else if (waitingCountDown[0] > 0)
-		{
-			waitingCountDown[0] -= 1;
-		}
-		else
-		{
-			bird_chat_box->x = 130;
-			bird_chat_text = "Let her\\  GO!";
-			hunter_chat_text = "  NO\\WAY!!";
-			tear->x = 126;
-
-			if (tear->scale <= 1) {
-				tear->y -= 0.06;
-				tear->scale += 0.003;
-			}
-			else
-			{
-				if (tear->y > 0)
-				{
-					tear->drop(.8);
-					waitingCountDown[1] = 240;
-				}
-				else
-				{
-					tear->x = width;
-					bird_chat_box->x = width;
-					hunter_chat_box->x = width;
-					bird_mom_chat_box->x = width;
-
-					if (bird->x <= width + 80 && waitingCountDown[1] > 0)
-					{
-						hunter->moveRight(1.6);
-						cage->moveRight(1.8);
-						bird_mom->moveRight(1.8);
-						bird->moveRight((hunter->x >= width - 50) ? bird->speed : 0);
-						bird->speed += .01;
-					}
-					else if (waitingCountDown[1] > 0)
-					{
-						waitingCountDown[1] -= 1;
-					}
-					else
-					{
-						isLoading = true;
-					}
-				}
-			}
-		}
+	else if (scene_2_parts[0] == false ||
+		scene_2_parts[1] == false ||
+		scene_2_parts[2] == false)
+	{
+		scene_2_update();
 	}
-
-	if (isLoading)
+	//=====================================
+	//loading
+	//=====================================
+	else if (isLoading)
 	{
 		if (!cover->moveDown(2))
 		{
@@ -303,7 +213,7 @@ void Intro::render()
 	glPopMatrix();
 }
 
-void Intro::changeScene() {
+void Intro::scene_2_init() {
 	bird_chat_box->x = width;
 	bird_chat_box->y = 170;
 	bird_mom_chat_box->x = width - 100;
@@ -311,6 +221,7 @@ void Intro::changeScene() {
 	bird->scale = 0.5;
 	bird->x = -100;
 	bird->y = 150;
+	bird->speed = 1.5;
 	bird_mom->scale = 0.5;
 	bird_mom->angle = 0;
 	bird_mom->x = width - 66;
@@ -322,4 +233,121 @@ void Intro::changeScene() {
 	cloud_2->y = height - 130;
 	cage->x = width - 150;
 	mountain->x = -100;
+	waitingCountDown = 100;
+}
+
+void Intro::scene_1_update()
+{
+	if (!scene_1_parts[0])
+	{
+		story_telling_text = "One day... Little bird is flying togather with its mom...";
+		if (cloud_1->x - 200 <= 0) {
+			scene_1_parts[0] = true;
+		}
+	}
+	else if (!scene_1_parts[1])
+	{
+		story_telling_text = "Suddenly...";
+		if (knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2) {
+			knife->moveLeft(bird->speed);
+			if (bird->speed > 0.2) bird->speed -= .0035;
+		}
+		else {
+			scene_1_parts[1] = true;
+		}
+	}
+	else if (!scene_1_parts[2])
+	{
+		story_telling_text = "";
+		bird_chat_box->x = 450;
+		bird_chat_text = "Mom!";
+		if (bird_mom->y >= -100) {
+			bird_mom->fall();
+			knife->fall();
+		}
+		else {
+			scene_1_parts[2] = true;
+
+			//setup value for next screen
+			scene_2_init();
+		}
+	}
+}
+
+void Intro::scene_2_update()
+{
+	bird_mom_chat_text = "HELP!";
+	hunter_chat_text = "Dinner\\SETTLE~";
+
+	if (!scene_2_parts[0])
+	{
+		if (bird->x <= 100)
+		{
+			bird->moveRight((bird->x < 40) ? 2 : .8);
+		}
+		else
+		{
+			if (waitingCountDown > 0)
+			{
+				waitingCountDown--;
+			}
+			else
+			{
+				scene_2_parts[0] = true;
+			}
+		}
+	}
+	else if (!scene_2_parts[1])
+	{
+		bird_chat_box->x = 130;
+		bird_chat_text = "Let her\\  GO!";
+		hunter_chat_text = "  NO\\WAY!!";
+		tear->x = 126;
+
+		if (tear->scale <= 1)
+		{
+			tear->y -= 0.06;
+			tear->scale += 0.003;
+		}
+		else
+		{
+			if (tear->y > 0)
+			{
+				tear->drop(.8);
+			}
+			else
+			{
+				waitingCountDown = 240;
+				scene_2_parts[1] = true;
+			}
+		}
+	}
+	else if (!scene_2_parts[2])
+	{
+		tear->x = width;
+		bird_chat_box->x = width;
+		hunter_chat_box->x = width;
+		bird_mom_chat_box->x = width;
+
+		if (bird->x <= width + 80)
+		{
+			hunter->moveRight(1.6);
+			cage->moveRight(1.8);
+			bird_mom->moveRight(1.8);
+			bird->moveRight((hunter->x >= width - 50) ? bird->speed : 0);
+			bird->speed += .01;
+		}
+		else
+		{
+			if (waitingCountDown > 0)
+			{
+				waitingCountDown--;
+			}
+			else
+			{
+				scene_2_parts[2] = true;
+				isLoading = true;
+			}
+		}
+	}
 }

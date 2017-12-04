@@ -14,17 +14,19 @@ public:
 	void init();
 	void update();
 	void render();
-	void changeScene();
 
 	bool isIntroOver;
-	bool isKnifeFly;
-	bool isMomBeenCut;
-	bool isMomFall;
 
 private:
+	void scene_2_init();
+	void scene_1_update();
+	void scene_2_update();
+
 	int width, height;
-	int waitingCountDown[2];
+	int waitingCountDown;
 	bool isLoading;
+	bool scene_1_parts[3] = { false, false, false };
+	bool scene_2_parts[3] = { false, false, false };
 	std::string story_telling_text;
 	std::string bird_chat_text;
 	std::string bird_mom_chat_text;
