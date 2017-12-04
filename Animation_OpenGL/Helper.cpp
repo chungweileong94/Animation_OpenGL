@@ -5,7 +5,7 @@ float Helper::hexToFloat(int hex)
 	return hex / 255.0f;
 }
 
-void Helper::drawText(const char * text, GLint length, GLfloat x, GLfloat y, int windowWidth, int windowHeight)
+void Helper::drawText(const char * text, GLint length, GLfloat x, GLfloat y, int windowWidth, int windowHeight, bool smallText)
 {
 	glMatrixMode(GL_PROJECTION);
 	double *matrix = new double[16];
@@ -30,7 +30,7 @@ void Helper::drawText(const char * text, GLint length, GLfloat x, GLfloat y, int
 		}
 		else
 		{
-			current_line_string_width += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, *c);
+			current_line_string_width += glutBitmapWidth(smallText ? GLUT_BITMAP_HELVETICA_12 : GLUT_BITMAP_HELVETICA_18, *c);
 		}
 	}
 	larger_string_width = (current_line_string_width > larger_string_width) ? current_line_string_width : larger_string_width;
@@ -41,7 +41,7 @@ void Helper::drawText(const char * text, GLint length, GLfloat x, GLfloat y, int
 		if (*c == '\\')
 			glRasterPos2f(x - larger_string_width / 2, y - 19);
 		else
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+			glutBitmapCharacter(smallText ? GLUT_BITMAP_HELVETICA_12 : GLUT_BITMAP_HELVETICA_18, *c);
 	}
 	glPopMatrix();
 

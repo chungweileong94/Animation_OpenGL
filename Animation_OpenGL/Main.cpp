@@ -107,6 +107,14 @@ void keyboardControl(unsigned char key, int x, int y) {
 	switch (key)
 	{
 	case 13:
+		if (!isIntroDelete)
+		{
+			if (!intro->isIntroOver && glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			{
+				intro->isIntroOver = true;
+			}
+		}
+
 		if (game->isGameOver)
 		{
 			game->init();
