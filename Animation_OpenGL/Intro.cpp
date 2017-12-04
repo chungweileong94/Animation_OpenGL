@@ -83,7 +83,7 @@ void Intro::init()
 	bird->scale = .7;
 	bird->x = 400;
 	bird->y = height / 3;
-	bird->speed = 1.2;
+	bird->speed = 1.5;
 	bird->angle = 0;
 	bird_mom->scale = 1.2;
 	bird_mom->x = 200;
@@ -116,14 +116,23 @@ void Intro::update()
 			isKnifeFly = true;
 		}
 	}
+	//=====================================
+	//screen 1
+	//=====================================
 	else if (!isIntroOver && isKnifeFly && !isMomBeenCut && !isMomFall)
 	{
 		story_telling_text = "Suddenly...";
 		if (knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2) {
-			knife->moveLeft((knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2 + 60) ? 1.5 : 0.2);
+			//knife->moveLeft((knife->x >= bird_mom->x + bird_mom->getScaledRadius() / 2 + 60) ? 1.5 : 0.2);
+			knife->moveLeft(bird->speed);
+			if (bird->speed > 0.2)
+			{
+				bird->speed -= .0035;
+			}
 		}
 		else {
 			isMomBeenCut = true;
+
 		}
 	}
 	else if (!isIntroOver && isKnifeFly && isMomBeenCut && !isMomFall)
@@ -139,9 +148,16 @@ void Intro::update()
 			isMomFall = true;
 			glFlush();
 			changeScene();
+
+
+			//setup value for next screen
+			bird->speed = 1.5;
 			waitingCountDown[0] = 100;
 		}
 	}
+	//=====================================
+	//screen 2
+	//=====================================
 	else if (!isIntroOver && isKnifeFly && isMomBeenCut && isMomFall) {
 		bird_mom_chat_text = "HELP!";
 		hunter_chat_text = "Dinner\\SETTLE~";
