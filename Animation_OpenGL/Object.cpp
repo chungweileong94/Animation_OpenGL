@@ -329,3 +329,33 @@ void Obj::Hunter::moveRight(float speed)
 	}
 	step = !step;
 }
+
+Obj::LoadingCover::LoadingCover(float width, float height)
+{
+	this->width = width;
+	this->height = height;
+}
+
+void Obj::LoadingCover::draw()
+{
+	glColor3f(Helper::hexToFloat(34), Helper::hexToFloat(177), Helper::hexToFloat(76));
+	Geo::drawRectangle(x, y, x, y + height, x + width, y + height, x + width, y);
+}
+
+bool Obj::LoadingCover::moveUp(float speed)
+{
+	if (y < height)
+	{
+		y += speed;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Obj::LoadingCover::reset()
+{
+	y = 0;
+}

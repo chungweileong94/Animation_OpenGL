@@ -111,6 +111,18 @@ namespace Obj
 		bool step = false;
 		float angle = 0;
 	};
+
+	class LoadingCover
+	{
+	public:
+		LoadingCover(float width, float height);
+		void draw();
+		bool moveUp(float speed);
+		void reset();
+
+	private:
+		float x = 0, y = 0, width, height;
+	};
 }
 
 #endif // !OBJECT_H

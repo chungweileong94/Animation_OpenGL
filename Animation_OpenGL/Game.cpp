@@ -13,6 +13,7 @@ Game::Game(int width, int height, bool devMode)
 	cloud_2 = new Obj::Cloud();
 	mountain = new Obj::Mountain();
 	bird = new Obj::Bird();
+	cover = new Obj::LoadingCover(width, height);
 	init();
 }
 
@@ -20,6 +21,7 @@ void Game::init()
 {
 	isGameStart = false;
 	isGameOver = false;
+	isLoading = true;
 
 	cloud_1->x = width / 2;
 	cloud_1->y = height / 2 + 50;
@@ -33,6 +35,7 @@ void Game::init()
 	bird->y = height / 2;
 	bird->velocity = 0;
 	bird->angle = 0;
+	cover->reset();
 
 	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
 		knifes[i].scale = .3;
@@ -45,6 +48,17 @@ void Game::init()
 
 void Game::update()
 {
+	if (isLoading)
+	{
+		if (!cover->moveUp(2))
+		{
+			isLoading = false;
+		}
+	}
+
+	//clear text
+	title = desc = "";
+
 	//background
 	if (cloud_1->x <= -200) {
 		cloud_1->x = width + 10;
@@ -62,9 +76,7 @@ void Game::update()
 	//check game status
 	if (!isGameStart && !isGameOver)
 	{
-		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
-		std::string title = "Tap 'Spacebar' or 'Left-click' to start";
-		Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
+		title = "Tap 'Spacebar' or 'Left-click' to start";
 		return;
 	}
 	else if (isGameStart && !isGameOver)
@@ -94,11 +106,8 @@ void Game::update()
 	}
 	else
 	{
-		glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
-		std::string title = "GAME OVER";
-		Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
-		std::string desc = "Press 'Enter' to retry again";
-		Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
+		title = "GAME OVER";
+		desc = "Press 'Enter' to retry again";
 	}
 }
 
@@ -180,10 +189,20 @@ void Game::render()
 		bird->drawDevGuideLine();
 	}
 #pragma endregion
+
+	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
+	Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
+	Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
+
+	glPushMatrix();
+	cover->draw();
+	glPopMatrix();
 }
 
 void Game::birdFly()
 {
+	if (isLoading) return;
+
 	if (isGameStart)
 		bird->fly();
 	else
