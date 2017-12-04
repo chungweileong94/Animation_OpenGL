@@ -24,6 +24,7 @@ public:
 private:
 	int width, height;
 	int waitingCountDown[2];
+	bool isLoading;
 	std::string story_telling_text;
 	std::string bird_chat_text;
 	std::string bird_mom_chat_text;
@@ -40,6 +41,7 @@ private:
 	Obj::Cage* cage;
 	Obj::Hunter* hunter;
 	Obj::Mountain* mountain;
+	Obj::LoadingCover* cover;
 };
 
 #endif // !INTRO_H

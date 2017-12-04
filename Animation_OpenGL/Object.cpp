@@ -355,7 +355,20 @@ bool Obj::LoadingCover::moveUp(float speed)
 	}
 }
 
-void Obj::LoadingCover::reset()
+bool Obj::LoadingCover::moveDown(float speed)
 {
-	y = 0;
+	if (y > 0)
+	{
+		y -= speed;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Obj::LoadingCover::reset(float newY)
+{
+	y = newY;
 }

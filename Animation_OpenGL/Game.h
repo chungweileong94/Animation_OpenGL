@@ -17,11 +17,11 @@ public:
 
 	bool isGameStart;
 	bool isGameOver;
-	bool isLoading;
 
 private:
 	bool dev;
 	int width, height;
+	bool isLoading;
 	std::string title = "", desc = "";
 	Obj::Mountain* mountain;
 	Obj::Cloud* cloud_1;

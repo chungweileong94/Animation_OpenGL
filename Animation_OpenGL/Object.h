@@ -118,7 +118,8 @@ namespace Obj
 		LoadingCover(float width, float height);
 		void draw();
 		bool moveUp(float speed);
-		void reset();
+		bool moveDown(float speed);
+		void reset(float newY = 0);
 
 	private:
 		float x = 0, y = 0, width, height;

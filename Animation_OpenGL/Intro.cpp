@@ -21,6 +21,7 @@ Intro::Intro(int width, int height)
 	cage = new Obj::Cage();
 	mountain = new Obj::Mountain();
 	tear = new Obj::Tear();
+	cover = new Obj::LoadingCover(width, height);
 	init();
 }
 
@@ -38,6 +39,7 @@ Intro::~Intro()
 	delete cage;
 	delete mountain;
 	delete tear;
+	delete cover;
 }
 
 void Intro::init()
@@ -46,6 +48,7 @@ void Intro::init()
 	isKnifeFly = false;
 	isMomBeenCut = false;
 	isMomFall = false;
+	isLoading = false;
 
 	cloud_1->x = 300;
 	cloud_1->y = height / 3;
@@ -89,6 +92,7 @@ void Intro::init()
 	tear->x = width;
 	tear->y = 126;
 	tear->scale = 0.3;
+	cover->reset(height);
 	glClearColor(Helper::hexToFloat(0), Helper::hexToFloat(255), Helper::hexToFloat(255), Helper::hexToFloat(255));
 }
 
@@ -188,10 +192,19 @@ void Intro::update()
 					}
 					else
 					{
-						isIntroOver = true;
+						isLoading = true;
 					}
 				}
 			}
+		}
+	}
+
+	if (isLoading)
+	{
+		if (!cover->moveDown(2))
+		{
+			isLoading = false;
+			isIntroOver = true;
 		}
 	}
 }
@@ -268,6 +281,10 @@ void Intro::render()
 	glColor3i(1, 0, 0);
 	std::string skip_hint_text = "Shirt + Enter [Skip]";
 	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), 60, 10, width, height, true);
+
+	glPushMatrix();
+	cover->draw();
+	glPopMatrix();
 }
 
 void Intro::changeScene() {
