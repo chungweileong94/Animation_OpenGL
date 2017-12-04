@@ -21,6 +21,7 @@ void Game::init()
 {
 	isGameStart = false;
 	isGameOver = false;
+	isPause = false;
 	isLoading = true;
 
 	cloud_1->x = width / 2;
@@ -81,6 +82,12 @@ void Game::update()
 	}
 	else if (isGameStart && !isGameOver)
 	{
+		if (isPause)
+		{
+			title = "Pause";
+			return;
+		}
+
 		if (bird->y <= -100 || bird->y >= height) {
 			isGameOver = true;
 			isGameStart = false;
@@ -194,6 +201,10 @@ void Game::render()
 	Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
 	Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
 
+	glColor3i(0, 0, 0);
+	std::string skip_hint_text = "Esc [Pause/Resume]";
+	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), 60, 10, width, height, true);
+
 	glPushMatrix();
 	cover->draw();
 	glPopMatrix();
@@ -201,7 +212,7 @@ void Game::render()
 
 void Game::birdFly()
 {
-	if (isLoading) return;
+	if (isLoading || isPause) return;
 
 	if (isGameStart)
 		bird->fly();

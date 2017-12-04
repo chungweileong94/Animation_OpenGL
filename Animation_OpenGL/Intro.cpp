@@ -278,7 +278,7 @@ void Intro::render()
 	Helper::drawText(bird_mom_chat_text.data(), bird_mom_chat_text.length(), bird_mom_chat_box->x + 56, bird_mom_chat_box->y + 40, width, height);
 	Helper::drawText(hunter_chat_text.data(), hunter_chat_text.length(), hunter_chat_box->x + 70, hunter_chat_box->y + 50, width, height);
 
-	glColor3i(1, 0, 0);
+	glColor3i(0, 0, 0);
 	std::string skip_hint_text = "Shirt + Enter [Skip]";
 	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), 60, 10, width, height, true);
 

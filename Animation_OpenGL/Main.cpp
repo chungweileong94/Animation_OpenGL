@@ -16,6 +16,7 @@ void mouseControl(int button, int state, int x, int y);
 
 Intro *intro;
 Game *game;
+int introPlaybackSpeed = 5;
 bool isDevMode = false;
 bool isIntroDelete = false;
 
@@ -41,7 +42,7 @@ void main(int argc, char** argv) {
 	glutCreateWindow(title);
 
 	glutDisplayFunc(render);
-	glutTimerFunc(5, update, 0);
+	glutTimerFunc(introPlaybackSpeed, update, 0);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboardControl);
 	glutMouseFunc(mouseControl);
@@ -85,7 +86,7 @@ void update(int value)
 		if (!intro->isIntroOver)
 		{
 			intro->update();
-			glutTimerFunc(6, update, 0);
+			glutTimerFunc(introPlaybackSpeed, update, 0);
 		}
 		else
 		{
@@ -118,6 +119,13 @@ void keyboardControl(unsigned char key, int x, int y) {
 		if (game->isGameOver)
 		{
 			game->init();
+		}
+		break;
+
+	case 27:
+		if (game->isGameStart)
+		{
+			game->isPause = !game->isPause;
 		}
 		break;
 

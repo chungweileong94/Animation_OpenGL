@@ -17,6 +17,7 @@ public:
 
 	bool isGameStart;
 	bool isGameOver;
+	bool isPause;
 
 private:
 	bool dev;
