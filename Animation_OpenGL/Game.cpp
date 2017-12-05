@@ -224,7 +224,7 @@ void Game::render()
 	Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
 
 	glColor3i(0, 0, 0);
-	std::string skip_hint_text = "Esc [Pause/Resume]          Shift + spacebar/right-click [Drop Tear]";
+	std::string skip_hint_text = "Esc [Pause/Resume]          Shift + spacebar/left-click [Drop Tear]";
 	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), width / 2, 10, width, height, true);
 
 	glPushMatrix();
