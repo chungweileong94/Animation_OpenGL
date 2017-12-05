@@ -246,6 +246,11 @@ void Obj::Tear::drop(float speed)
 	y -= speed;
 }
 
+void Obj::Tear::moveLeft(float speed)
+{
+	x -= speed;
+}
+
 void Obj::Cage::draw()
 {
 	glTranslatef(x, y, 0);

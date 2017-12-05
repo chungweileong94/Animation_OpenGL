@@ -13,6 +13,7 @@ Game::Game(int width, int height, bool devMode)
 	cloud_2 = new Obj::Cloud();
 	mountain = new Obj::Mountain();
 	bird = new Obj::Bird();
+	tear = new Obj::Tear();
 	cover = new Obj::LoadingCover(width, height);
 	init();
 }
@@ -36,6 +37,8 @@ void Game::init()
 	bird->y = height / 2;
 	bird->velocity = 0;
 	bird->angle = 0;
+	tear->x = bird->x + 20;
+	tear->y = -100;
 	cover->reset();
 
 	for (int i = 0; i < sizeof(knifes) / sizeof(knifes[0]); i++) {
@@ -73,6 +76,20 @@ void Game::update()
 	cloud_1->moveleft();
 	cloud_2->moveleft();
 	mountain->moveleft();
+
+	//tear
+	if (isTearDrop)
+	{
+		if (tear->y < -100)
+		{
+			isTearDrop = false;
+		}
+		else
+		{
+			tear->drop(1);
+			tear->moveLeft(1);
+		}
+	}
 
 	//check game status
 	if (!isGameStart && !isGameOver)
@@ -197,13 +214,18 @@ void Game::render()
 	}
 #pragma endregion
 
+	//tear
+	glPushMatrix();
+	tear->draw();
+	glPopMatrix();
+
 	glColor3f(Helper::hexToFloat(255), Helper::hexToFloat(50), Helper::hexToFloat(0));
 	Helper::drawText(title.data(), title.length(), width / 2, height / 2, width, height);
 	Helper::drawText(desc.data(), desc.length(), width / 2, height / 2 - 28, width, height);
 
 	glColor3i(0, 0, 0);
-	std::string skip_hint_text = "Esc [Pause/Resume]";
-	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), 60, 10, width, height, true);
+	std::string skip_hint_text = "Esc [Pause/Resume]          Shift + spacebar/right-click [Drop Tear]";
+	Helper::drawText(skip_hint_text.data(), skip_hint_text.length(), width / 2, 10, width, height, true);
 
 	glPushMatrix();
 	cover->draw();
@@ -218,4 +240,16 @@ void Game::birdFly()
 		bird->fly();
 	else
 		isGameStart = true;
+}
+
+void Game::dropTear()
+{
+	if (isLoading || isPause) return;
+
+	if (isGameStart && !isTearDrop)
+	{
+		tear->x = bird->x + 20;
+		tear->y = bird->y - 35;
+		isTearDrop = true;
+	}
 }

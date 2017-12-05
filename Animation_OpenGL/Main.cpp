@@ -130,7 +130,15 @@ void keyboardControl(unsigned char key, int x, int y) {
 		break;
 
 	case ' ':
-		if (isIntroDelete) game->birdFly();
+		if (isIntroDelete)
+		{
+			if (glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			{
+				game->dropTear();
+			}
+
+			game->birdFly();
+		}
 		break;
 	}
 }
@@ -138,7 +146,15 @@ void keyboardControl(unsigned char key, int x, int y) {
 void mouseControl(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		if (isIntroDelete) game->birdFly();
+
+		if (isIntroDelete)
+		{
+			if (glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			{
+				game->dropTear();
+			}
+
+			game->birdFly();
+		}
 	}
 }
-

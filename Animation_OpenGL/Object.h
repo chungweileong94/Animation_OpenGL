@@ -86,6 +86,7 @@ namespace Obj
 
 		void draw();
 		void drop(float speed);
+		void moveLeft(float speed);
 	};
 
 	class Cage

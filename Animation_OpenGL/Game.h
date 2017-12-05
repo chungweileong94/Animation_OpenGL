@@ -14,6 +14,7 @@ public:
 	void checkCollision();
 	void render();
 	void birdFly();
+	void dropTear();
 
 	bool isGameStart;
 	bool isGameOver;
@@ -22,12 +23,13 @@ public:
 private:
 	bool dev;
 	int width, height;
-	bool isLoading;
+	bool isLoading, isTearDrop;
 	std::string title = "", desc = "";
 	Obj::Mountain* mountain;
 	Obj::Cloud* cloud_1;
 	Obj::Cloud* cloud_2;
 	Obj::Bird* bird;
+	Obj::Tear* tear;
 	Obj::Knife knifes[3];
 	Obj::LoadingCover *cover;
 };
